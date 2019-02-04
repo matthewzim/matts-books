@@ -3,30 +3,30 @@ body {
 }
 
 #container {
-  display: flex;
-  justify-content: center;
   color: white;
   font-family: sans-serif;
-  display: flex;
-  align-items: flex-end;
-  width: 100vw;
-  justify-content: space-between;
-  height: 100vh;
 }
+
 
 #books {
   display: flex;
+  align-items: baseline;
+}
+
+.book-images {
+  padding-left: 3px;
 }
 
 #shelf {
   font-size: 1.5vw;
-  /* background-color: red; */
   border-top: 1px solid white;
+  border-bottom: 1px solid white;
   display: flex;
   align-items: center;
   width: 100vw;
   justify-content: space-around;
   height: 10vh;
+  font-weight: lighter;
 }
 
 #currently-reading {
