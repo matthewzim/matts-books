@@ -1,5 +1,7 @@
-$.getJSON("json/books.json", function(json) {
-  console.log(json[1].Number);
+$.getJSON("json/books.json", function(books) {
+  console.log(books[1].Number);
+  console.log(books[1].Title);
+  console.log(books[1].Author);
 });
 
 for (var i = 1; i < 25; i++) {
@@ -11,23 +13,15 @@ for (var i = 1; i < 25; i++) {
 
 function getSize(number) {
   var img = document.getElementById(number);
-  //or however you get a handle to the IMG
+
   var width = img.naturalWidth;
   var height = img.naturalHeight;
 
-  console.log(width);
-  console.log(height);
-
-  var newWidth = width / 4.5;
-  var newHeight = height / 4.5;
-
-  console.log(newWidth);
-  console.log(newHeight);
+  var newWidth = width / 5;
+  var newHeight = height / 5;
 
   widthString = newWidth.toString();
   heightString = newHeight.toString();
-
-  console.log(widthString);
 
   img.style.height = heightString + 'px';
   img.style.width = widthString + 'px';

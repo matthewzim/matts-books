@@ -3,34 +3,52 @@ body {
 }
 
 #container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   color: white;
   font-family: sans-serif;
+  height: 100vh;
 }
-
 
 #books {
   display: flex;
   align-items: baseline;
+  overflow-x: scroll;
+  /* REVERSE ROW */
+  /* flex-direction: row-reverse;
+  justify-content: flex-end; */
 }
 
 .book-images {
-  padding-left: 3px;
+  margin-left: 3px;
+}
+
+.book-images:hover {
+  cursor: help;
+}
+
+#books:hover > .book-images {
+  opacity: 0.2;
+}
+
+#books:hover > .book-images:hover {
+  opacity: 1.0;
 }
 
 #shelf {
-  font-size: 1.5vw;
+  font-size: 20px;
   border-top: 1px solid white;
-  border-bottom: 1px solid white;
   display: flex;
   align-items: center;
   width: 100vw;
   justify-content: space-around;
-  height: 10vh;
+  height: 70px;
   font-weight: lighter;
 }
 
 #currently-reading {
-  font-size: 0.75vw;
+  font-size: 14px;
   font-weight: lighter;
 }
 
