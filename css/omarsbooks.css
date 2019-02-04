@@ -27,6 +27,8 @@ body {
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: white;
+  z-index: 1;
 }
 
 #number {
@@ -61,7 +63,7 @@ body {
 }
 
 #books:hover > .book-images {
-  opacity: 0.2;
+  opacity: 0.15;
 }
 
 #books:hover > .book-images:hover {
