@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'BodoniIt';
+  src: url("/font/bodonit.ttf") format("truetype");
+}
+
 body {
   background-color: black;
 }
@@ -9,6 +14,33 @@ body {
   color: white;
   font-family: sans-serif;
   height: 100vh;
+}
+
+#description {
+  display: flex;
+  height: 75vh;
+  width: 100vw;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#number {
+  font-size: 5vw;
+}
+
+#title {
+  font-size: 10vw;
+  font-family: BodoniIt;
+}
+
+#by, #author {
+  font-size: 5vw;
+  font-family: BodoniIt;
 }
 
 #books {

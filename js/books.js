@@ -1,4 +1,7 @@
 $.getJSON("json/books.json", function(books) {
+
+  
+
   console.log(books[1].Number);
   console.log(books[1].Title);
   console.log(books[1].Author);
