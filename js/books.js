@@ -11,12 +11,6 @@ for (var i = 1; i < 25; i++) {
   getSize(i);
 }
 
-// $(".book-images").hover(function(){
-//   $(this).css("opacity", "0.15");
-//   }, function(){
-//   $(this).css("opacity", "1");
-// });
-
 function getSize(number) {
   var img = document.getElementById(number);
 

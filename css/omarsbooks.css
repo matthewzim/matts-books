@@ -48,7 +48,6 @@ body {
 #books-container {
   display: flex;
   align-items: baseline;
-  /* overflow-x: scroll; */
   /* REVERSE ROW */
   /* flex-direction: row-reverse;
   justify-content: flex-end; */
@@ -65,12 +64,7 @@ body {
 
 .book-images:hover {
   cursor: help;
-  /* opacity: 0.15; */
 }
-
-/* .book-images:hover > #books {
-  opacity: 1;
-} */
 
 #books:hover > .book-images {
   opacity: 0.15;
@@ -85,7 +79,6 @@ body {
   border-top: 1px solid white;
   display: flex;
   align-items: center;
-  width: 100vw;
   justify-content: space-around;
   height: 70px;
   font-weight: lighter;
