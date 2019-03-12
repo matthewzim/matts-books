@@ -16,7 +16,7 @@ body {
   height: 100vh;
 }
 
-#description {
+/* #description {
   display: flex;
   height: 75vh;
   width: 100vw;
@@ -29,7 +29,7 @@ body {
   transform: translate(-50%, -50%);
   color: white;
   z-index: 1;
-}
+} */
 
 #number {
   font-size: 5vw;
@@ -45,22 +45,32 @@ body {
   font-family: BodoniIt;
 }
 
-#books {
+#books-container {
   display: flex;
   align-items: baseline;
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
   /* REVERSE ROW */
   /* flex-direction: row-reverse;
   justify-content: flex-end; */
 }
 
+#books {
+  background-color: red;
+  height: 0px;
+}
+
 .book-images {
-  margin-left: 3px;
+  margin-left: 2px;
 }
 
 .book-images:hover {
   cursor: help;
+  /* opacity: 0.15; */
 }
+
+/* .book-images:hover > #books {
+  opacity: 1;
+} */
 
 #books:hover > .book-images {
   opacity: 0.15;
