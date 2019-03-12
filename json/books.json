@@ -25,6 +25,11 @@
    "Author": "Le Corbusier"
  },
  {
+   "Number": 6,
+   "Title": "Animal Farm",
+   "Author": "George Orwell"
+ },
+ {
    "Number": 7,
    "Title": "The Metamorphosis",
    "Author": "Franz Kafka"

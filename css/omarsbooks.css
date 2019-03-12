@@ -16,8 +16,8 @@ body {
   height: 100vh;
 }
 
-/* #description {
-  display: flex;
+#description {
+  display: none;
   height: 75vh;
   width: 100vw;
   justify-content: space-around;
@@ -28,8 +28,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  z-index: 1;
-} */
+  z-index: -1;
+}
 
 #number {
   font-size: 5vw;
@@ -59,7 +59,7 @@ body {
 }
 
 .book-images {
-  margin-left: 2px;
+  margin-left: 0px;
 }
 
 .book-images:hover {
@@ -67,7 +67,7 @@ body {
 }
 
 #books:hover > .book-images {
-  opacity: 0.15;
+  opacity: 0;
 }
 
 #books:hover > .book-images:hover {
