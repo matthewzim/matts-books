@@ -4,14 +4,23 @@ new Vue({
     value: '1',
     books :[]
   },
-  methods: {
+  created: function () {
     
+  },
+  methods: {
+    setImages:function() {
+
+    }
+  },
+  computed: {
 
   },
   mounted() {
     $.getJSON('json/books.json', json => {
       this.books = json
     })
+    this.setImages()
+
   },
   beforeMount() {
 
