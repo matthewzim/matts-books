@@ -1,6 +1,4 @@
 $(document).ready(function() {
-
-  console.log("fuck these images");
   var img = document.getElementsByTagName('img');
 
   for (var i = 1; i < img.length + 1; i++) {

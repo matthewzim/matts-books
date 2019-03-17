@@ -1,12 +1,9 @@
 $(document).ready(function() {
-  loadImages();
-  function loadImages() {
     for (var i = 1; i < 25; i++) {
       $("#books").append(
         '<img class = "book-images" id = ' + i + ' src = "jpg/' + i + '.jpg">'
       );
-      getSize(i);
-    }
+    getSize(i);
   }
 
   $.getJSON("json/books.json", function(books) {
@@ -15,7 +12,6 @@ $(document).ready(function() {
     // console.log(books[0].Author);
 
     var length = books.length;
-    console.log(length);
 
     $("#reading-book").html(books[length-1].Title);
 
@@ -37,8 +33,17 @@ $(document).ready(function() {
     var width = img.naturalWidth;
     var height = img.naturalHeight;
 
-    var newWidth = width / 5;
-    var newHeight = height / 5;
+    var w = window.innerWidth;
+    console.log(w);
+
+    if (w < 1500) {
+      var newWidth = width / 5;
+      var newHeight = height / 5;
+    }
+    else if (w > 1500) {
+      var newWidth = width / 3;
+      var newHeight = height / 3;
+    }
 
     widthString = newWidth.toString();
     heightString = newHeight.toString();

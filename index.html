@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMAR'S BOOKS</title>
 
     <script src="http://localhost:35729/livereload.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="css/omarsbooks.css">
-    <link rel="stylesheet" href="css/omarsbooks-mobile.css">
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/omarsbooks.css">
+      <link rel="stylesheet" href="css/omarsbooksMobile.css">
 
   </head>
   <body>
@@ -33,7 +34,7 @@
           <!-- <img v-for="book in books" v-bind:id="book.Number" v-bind:src=" 'jpg/' + book.Number + '.jpg' " alt=""> -->
         </div>
       </div>
-      <div id="shelf">
+      <div id="shelf-desktop">
         <div>
           OMAR'S BOOKS
         </div>
@@ -47,6 +48,11 @@
           <div id="reading-book">
             {{books[books.length-1].Title}}
           </div>
+        </div>
+      </div>
+      <div id="shelf-mobile">
+        <div>
+          OMAR'S BOOKS
         </div>
       </div>
     </div>
@@ -65,7 +71,7 @@
   <!-- END GET TIME FUNCTION -->
 
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="js/books-images.js" charset="utf-8"></script>
+  <!-- <script src="js/books-images.js" charset="utf-8"></script> -->
   <script src="js/books.js" charset="utf-8"></script>
   <!-- <script src="js/books-vue.js" charset="utf-8"></script> -->
 

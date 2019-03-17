@@ -1,0 +1,24 @@
+@media (max-width: 576px) {
+  #shelf-desktop {
+    display: none;
+  }
+  #shelf-mobile {
+    display: none;
+  }
+
+  #container {
+    flex-direction: column-reverse;
+  }
+
+  #number {
+    font-size: 10vw;
+  }
+
+  #title {
+    font-size: 15vw;
+  }
+
+  #by, #author {
+    font-size: 15vw;
+  }
+}
