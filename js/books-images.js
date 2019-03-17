@@ -3,8 +3,9 @@ $(document).ready(function() {
   console.log("fuck these images");
   var img = document.getElementsByTagName('img');
 
-  for (var i = 0; i < img.length; i++) {
-    getSize(i + 1)
+  for (var i = 1; i < img.length + 1; i++) {
+    console.log("hi");
+    getSize(i)
   }
 
   function getSize(number) {

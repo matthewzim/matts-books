@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   loadImages();
   function loadImages() {
     for (var i = 1; i < 25; i++) {
@@ -14,6 +13,11 @@ $(document).ready(function() {
     // console.log(books[0].Number);
     // console.log(books[0].Title);
     // console.log(books[0].Author);
+
+    var length = books.length;
+    console.log(length);
+
+    $("#reading-book").html(books[length-1].Title);
 
     $(".book-images").hover(function(){
       $("#number").html("(#" + books[this.id-1].Number + ")");
@@ -42,13 +46,4 @@ $(document).ready(function() {
     img.style.height = heightString + 'px';
     img.style.width = widthString + 'px';
   }
-
-
-  getTheTime();
-  function getTheTime() {
-    var d = new Date();
-    var n = d.toLocaleTimeString();
-    document.getElementById("time").innerHTML = n;
-  }
-  setInterval(getTheTime, 1000);
 });
