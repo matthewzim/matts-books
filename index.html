@@ -16,21 +16,21 @@
     <div id="container">
       <div id="description">
         <div id="number">
-          (#23)
+          (#{{books[value - 1].Number}})
         </div>
         <div id="title">
-          Slaughterhouse Five
+          {{books[value - 1].Title}}
         </div>
         <div id="by">
           by
         </div>
         <div id="author">
-          Kurt Vonnegut
+          {{books[value - 1].Author}}
         </div>
       </div>
       <div id="books-container">
         <div id="books">
-
+          <img v-for="book in books" v-bind:id="book.Number" v-bind:src=" 'jpg/' + book.Number + '.jpg' " alt="">
         </div>
       </div>
       <div id="shelf">
@@ -45,16 +45,26 @@
             CURRENTLY READING
           </div>
           <div id="reading-book">
-            GAMES WITHOUT RULES
+            {{books[books.length-1].Title}}
           </div>
         </div>
-        <!-- <div>
-          INFO
-        </div> -->
       </div>
     </div>
   </body>
 
+  <!-- GET TIME FUNCTION -->
+  <script type="text/javascript">
+    getTheTime();
+    function getTheTime() {
+      var d = new Date();
+      var n = d.toLocaleTimeString();
+      document.getElementById("time").innerHTML = n;
+    }
+    setInterval(getTheTime, 1000);
+  </script>
+  <!-- END GET TIME FUNCTION -->
+
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="js/books.js" charset="utf-8"></script>
+  <script src="js/books-vue.js" charset="utf-8"></script>
+  <!-- <script src="js/books.js" charset="utf-8"></script> -->
 </html>

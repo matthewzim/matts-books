@@ -17,7 +17,7 @@ body {
 }
 
 #description {
-  display: none;
+  display: flex;
   height: 75vh;
   width: 100vw;
   justify-content: space-around;

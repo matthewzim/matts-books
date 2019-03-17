@@ -1,16 +1,17 @@
 new Vue({
   el: "#container",
   data: {
-    name: '',
-  },
-  created: function () {
-    // console.log(this.dynamicFont.fontFamily);
+    value: '1',
+    books :[]
   },
   methods: {
+    
 
   },
   mounted() {
-
+    $.getJSON('json/books.json', json => {
+      this.books = json
+    })
   },
   beforeMount() {
 
