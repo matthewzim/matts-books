@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'BodoniIt';
-  src: url("/font/bodonit.ttf") format("truetype");
+  src: url("../font/bodonit.ttf") format("truetype");
 }
 
 body {
