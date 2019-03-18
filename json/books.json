@@ -26,8 +26,8 @@
  },
  {
    "Number": 6,
-   "Title": "Animal Farm",
-   "Author": "George Orwell"
+   "Title": "Farenheit 451",
+   "Author": "Ray Bradbury"
  },
  {
    "Number": 7,
@@ -118,5 +118,16 @@
    "Number": 24,
    "Title": "No Longer at Ease",
    "Author": "Chinua Achebe"
+ },
+ {
+   "Number": 25,
+   "Title": "Games Without Rules",
+   "Author": "Tamim Ansary"
+ },
+ {
+   "Number": 26,
+   "Title": "Servants of Allah",
+   "Author": "Sylviane A. Diouf"
  }
+
 ]

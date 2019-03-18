@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    for (var i = 1; i < 25; i++) {
+    for (var i = 1; i < 27; i++) {
       $("#books").append(
         '<img class = "book-images" id = ' + i + ' src = "jpg/' + i + '.jpg">'
       );
@@ -12,6 +12,7 @@ $(document).ready(function() {
     // console.log(books[0].Author);
 
     var length = books.length;
+    console.log(length);
 
     $("#reading-book").html(books[length-1].Title);
 
@@ -34,7 +35,6 @@ $(document).ready(function() {
     var height = img.naturalHeight;
 
     var w = window.innerWidth;
-    console.log(w);
 
     if (w < 1500) {
       var newWidth = width / 5;
