@@ -83,11 +83,12 @@ body {
 }
 
 #books:hover > .book-images {
-  opacity: 0;
+  opacity: 0.15;
+  mix-blend-mode: lighten;
 }
 
 #books:hover > .book-images:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 #shelf-desktop {
