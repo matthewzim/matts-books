@@ -1,18 +1,14 @@
 $(document).ready(function() {
-    for (var i = 1; i < 27; i++) {
+  $.getJSON("json/books.json", function(books) {
+    var length = books.length;
+    // console.log(length);
+
+    for (var i = 1; i < length + 1; i++) {
       $("#books").append(
         '<img class = "book-images" id = ' + i + ' src = "jpg/' + i + '.jpg">'
       );
-    getSize(i);
-  }
-
-  $.getJSON("json/books.json", function(books) {
-    // console.log(books[0].Number);
-    // console.log(books[0].Title);
-    // console.log(books[0].Author);
-
-    var length = books.length;
-    console.log(length);
+      getSize(i);
+    }
 
     $("#reading-book").html(books[length-1].Title);
 
@@ -27,28 +23,29 @@ $(document).ready(function() {
     });
   });
 
-
   function getSize(number) {
     var img = document.getElementById(number);
 
-    var width = img.naturalWidth;
-    var height = img.naturalHeight;
+    img.onload = function() {
+      var width = img.naturalWidth;
+      var height = img.naturalHeight;
 
-    var w = window.innerWidth;
+      var w = window.innerWidth;
 
-    if (w < 1500) {
-      var newWidth = width / 5;
-      var newHeight = height / 5;
+      if (w < 1500) {
+        var newWidth = width / 5;
+        var newHeight = height / 5;
+      }
+      else if (w > 1500) {
+        var newWidth = width / 3;
+        var newHeight = height / 3;
+      }
+
+      widthString = newWidth.toString();
+      heightString = newHeight.toString();
+
+      img.style.height = heightString + 'px';
+      img.style.width = widthString + 'px';
     }
-    else if (w > 1500) {
-      var newWidth = width / 3;
-      var newHeight = height / 3;
-    }
-
-    widthString = newWidth.toString();
-    heightString = newHeight.toString();
-
-    img.style.height = heightString + 'px';
-    img.style.width = widthString + 'px';
   }
 });
