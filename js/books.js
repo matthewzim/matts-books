@@ -32,11 +32,15 @@ $(document).ready(function() {
 
       var w = window.innerWidth;
 
-      if (w < 1500) {
+      if (w <= 1500 && w >= 1200) {
         var newWidth = width / 5;
         var newHeight = height / 5;
       }
-      else if (w > 1500) {
+      else if (w <= 1200) {
+        var newWidth = width / 6;
+        var newHeight = height / 6;
+      }
+      else if (w >= 1500) {
         var newWidth = width / 3;
         var newHeight = height / 3;
       }

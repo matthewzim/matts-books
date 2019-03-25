@@ -6,10 +6,6 @@
     display: none;
   }
 
-  #container {
-    flex-direction: column-reverse;
-  }
-
   #number {
     font-size: 10vw;
   }
