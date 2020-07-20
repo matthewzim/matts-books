@@ -64,6 +64,7 @@ body {
 #books-container {
   display: flex;
   align-items: baseline;
+  margin-bottom: 70px;
 }
 
 #books {
@@ -92,6 +93,7 @@ body {
 }
 
 #shelf-desktop {
+  position: fixed;
   width: 100vw;
   font-size: 20px;
   border-top: 1px solid white;
