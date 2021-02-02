@@ -69,6 +69,7 @@ body {
 
 #books {
   display: flex;
+  flex-direction: row-reverse;
   flex-wrap: nowrap;
   align-items: baseline;
   background-color: red;
