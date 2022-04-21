@@ -243,6 +243,36 @@
     "Number": 49,
     "Title": "Dune",
     "Author": "Frank Herbert"
+  },
+		{
+    "Number": 50,
+    "Title": "The Future of Transportation",
+    "Author": "SOM Thinkers"
+  },
+  {
+    "Number": 51,
+    "Title": "Islam Explained",
+    "Author": "Ahmad Rashid Salim"
+  },
+  {
+    "Number": 52,
+    "Title": "The Life of Muhammad",
+    "Author": "Ibn Ishaq"
+  },
+  {
+    "Number": 53,
+    "Title": "Charlie and the Chocolate Factory",
+    "Author": "Roald Dahl"
+  },
+  {
+    "Number": 54,
+    "Title": "Caps Lock",
+    "Author": "Ruben Pater"
+  },
+  {
+    "Number": 55,
+    "Title": "Kabul Under Siege",
+    "Author": "Fayz Muhammad"
   }
 ]
  
