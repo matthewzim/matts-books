@@ -271,8 +271,28 @@
   },
   {
     "Number": 55,
+    "Title": "The Lives of Man",
+    "Author": "Imam Al-Hadad"
+  },
+  {
+    "Number": 56,
     "Title": "Kabul Under Siege",
     "Author": "Fayz Muhammad"
+  },
+  {
+    "Number": 57,
+    "Title": "I Am a Cat",
+    "Author": "Natsume Sōseki"
+  },
+  {
+    "Number": 58,
+    "Title": "Embattled Saints",
+    "Author": "Kenneth P. Lizzio"
+  },
+  {
+    "Number": 59,
+    "Title": "West of Kabul, East of New York",
+    "Author": "Tamim Ansary"
   }
 ]
  
