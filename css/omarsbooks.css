@@ -64,7 +64,8 @@ body {
 #books-container {
   display: flex;
   align-items: baseline;
-  margin-bottom: 70px;
+  margin-bottom: 0px;
+  /* background-color: red; */
 }
 
 #books {
@@ -72,8 +73,8 @@ body {
   flex-direction: row-reverse;
   flex-wrap: nowrap;
   align-items: baseline;
-  background-color: red;
-  height: 0px;
+  /* background-color: red; */
+  /* height: 0px; */
 }
 
 .book-images {
@@ -104,6 +105,7 @@ body {
   height: 70px;
   font-weight: lighter;
   background-color: black;
+  opacity: 0.9;
   font-family: AKZTEST;
   /* position: fixed; */
 }
