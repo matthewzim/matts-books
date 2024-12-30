@@ -1,0 +1,137 @@
+@font-face {
+  font-family: 'BodoniIt';
+  src: url("../font/bodonit.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'AKZROM';
+  src: url("../font/AKZROM.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'AKZTEST';
+  src: url("../font/AKZTEST.ttf") format("truetype");
+}
+
+body {
+  background-color: black;
+}
+
+#Orientalism {
+  display: none;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: white;
+  font-family: sans-serif;
+  height: 100vh;
+}
+
+#description {
+  display: none;
+  height: 80vh;
+  width: 100vw;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+
+}
+
+#number {
+  font-size: 5vw;
+  font-family: AKZROM;
+}
+
+#title {
+  font-size: 10vw;
+  font-family: BodoniIt;
+}
+
+#by, #author {
+  font-size: 5vw;
+  font-family: BodoniIt;
+}
+
+#books-container {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 0px;
+  /* background-color: red; */
+}
+
+#books {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  /* background-color: red; */
+  /* height: 0px; */
+}
+
+.book-images {
+  margin-left: 0px;
+}
+
+.book-images:hover {
+  cursor: help;
+}
+
+#books:hover > .book-images {
+  opacity: 0.15;
+  mix-blend-mode: lighten;
+}
+
+#books:hover > .book-images:hover {
+  opacity: 1;
+}
+
+#shelf-desktop {
+  position: fixed;
+  width: 100vw;
+  font-size: 20px;
+  border-top: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 70px;
+  font-weight: lighter;
+  background-color: black;
+  opacity: 0.9;
+  font-family: AKZTEST;
+  /* position: fixed; */
+}
+
+#shelf-mobile {
+  display: none;
+  font-size: 20px;
+  align-items: center;
+  justify-content: space-around;
+  height: 70px;
+  font-weight: lighter;
+  position: fixed;
+  width: 100vw;
+  background-color: red;
+}
+
+#time {
+  font-family: AKZTEST;
+}
+
+#currently-reading {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+#reading-book {
+  font-size: 22px;
+  text-decoration: underline;
+}
