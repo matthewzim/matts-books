@@ -70,11 +70,17 @@ body {
 
 #books {
   display: flex;
-  flex-direction: row-reverse;
   flex-wrap: nowrap;
-  align-items: baseline;
-  /* background-color: red; */
-  /* height: 0px; */
+  justify-content: center;
+  align-items: flex-end; /* aligns bottoms evenly */
+}
+
+#books img {
+  height: 400px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
 .book-images {
