@@ -78,12 +78,11 @@ body {
 
 #books img {
   display: block;
-  height: 400px;          /* all same height */
+  height: auto;          /* all same height */
   width: auto;            /* keep natural proportions */
   margin: 0;
   padding: 0;
   border: 0;
-  object-fit: contain;    /* just in case an image has odd aspect ratio */
 }
 
 .book-images {
