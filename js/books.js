@@ -87,21 +87,20 @@ $(document).ready(function() {
     img.onload = function() {
       var width = img.naturalWidth;
       var height = img.naturalHeight;
-
       var w = window.innerWidth;
+      var divisor;
 
-      if (w <= 1500 && w >= 1200) {
-        var newWidth = width / 5;
-        var newHeight = height / 5;
+      if (w >= 1500) {
+        divisor = 3;
+      } else if (w >= 1200) {
+        divisor = 5;
+      } else {
+        divisor = 6;
       }
-      else if (w <= 1200) {
-        var newWidth = width / 6;
-        var newHeight = height / 6;
-      }
-      else if (w >= 1500) {
-        var newWidth = width / 3;
-        var newHeight = height / 3;
-      }
+
+      var scaleFactor = 1.25;
+      var newWidth = (width / divisor) * scaleFactor;
+      var newHeight = (height / divisor) * scaleFactor;
 
       widthString = newWidth.toString();
       heightString = newHeight.toString();
