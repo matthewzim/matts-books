@@ -25,6 +25,9 @@ $(document).ready(function() {
     $items.each(function() {
       this.style.gridRow = "";
       this.style.gridColumn = "";
+      this.style.left = "";
+      this.style.top = "";
+      this.style.position = "";
     });
   }
 
@@ -34,13 +37,24 @@ $(document).ready(function() {
     const rowMode = $rowToggle.val();
     const scrollMode = $scrollToggle.val();
     const $items = $books.children(".book-images");
+    const booksElement = $books.get(0);
+
+    if (!booksElement) {
+      return;
+    }
 
     if (!$items.length) {
+      booksElement.style.width = "";
+      booksElement.style.height = "";
+      booksElement.style.removeProperty("--two-row-divider-top");
       return;
     }
 
     if (rowMode !== "two" || scrollMode !== "horizontal") {
       clearBookPlacement($items);
+      booksElement.style.width = "";
+      booksElement.style.height = "";
+      booksElement.style.removeProperty("--two-row-divider-top");
       return;
     }
 
@@ -48,10 +62,16 @@ $(document).ready(function() {
 
     if (!availableWidth) {
       clearBookPlacement($items);
+      booksElement.style.width = "";
+      booksElement.style.height = "";
+      booksElement.style.removeProperty("--two-row-divider-top");
       return;
     }
 
     clearBookPlacement($items);
+    booksElement.style.width = "";
+    booksElement.style.height = "";
+    booksElement.style.removeProperty("--two-row-divider-top");
 
     const totalItems = $items.length;
     const minColumns = Math.ceil(totalItems / 2);
@@ -60,6 +80,17 @@ $(document).ready(function() {
         return Math.ceil($(this).outerWidth(true));
       })
       .get();
+    const itemHeights = $items
+      .map(function() {
+        return Math.ceil($(this).outerHeight(true));
+      })
+      .get();
+    const gapValue = parseFloat(
+      window
+        .getComputedStyle(booksElement)
+        .getPropertyValue("--two-row-gap")
+    );
+    const rowGap = Number.isFinite(gapValue) ? gapValue : 0;
 
     var optimalColumns = null;
 
@@ -87,6 +118,11 @@ $(document).ready(function() {
     const firstRowCount = Math.min(optimalColumns, totalItems);
     const secondRowCount = totalItems - firstRowCount;
 
+    const topLeftOffsets = [];
+    let currentLeft = 0;
+    let topRowWidth = 0;
+    let maxTopHeight = 0;
+
     for (let index = 0; index < firstRowCount; index++) {
       const element = $items.get(index);
 
@@ -94,9 +130,24 @@ $(document).ready(function() {
         continue;
       }
 
-      element.style.gridRow = "1";
-      element.style.gridColumn = String(index + 1);
+      const elementWidth = itemWidths[index] || 0;
+      const elementHeight = itemHeights[index] || 0;
+
+      element.style.position = "absolute";
+      element.style.left = currentLeft + "px";
+      element.style.top = "0px";
+
+      topLeftOffsets.push(currentLeft);
+      currentLeft += elementWidth;
+      topRowWidth = currentLeft;
+      if (elementHeight > maxTopHeight) {
+        maxTopHeight = elementHeight;
+      }
     }
+
+    let bottomLeft = 0;
+    let bottomRowWidth = 0;
+    let maxBottomHeight = 0;
 
     for (let index = 0; index < secondRowCount; index++) {
       const element = $items.get(firstRowCount + index);
@@ -105,9 +156,39 @@ $(document).ready(function() {
         continue;
       }
 
-      element.style.gridRow = "2";
-      element.style.gridColumn = String(index + 1);
+      const elementWidth = itemWidths[firstRowCount + index] || 0;
+      const elementHeight = itemHeights[firstRowCount + index] || 0;
+      const preferredLeft =
+        topLeftOffsets[index] !== undefined ? topLeftOffsets[index] : bottomLeft;
+      const resolvedLeft = Math.max(preferredLeft, bottomLeft);
+
+      element.style.position = "absolute";
+      element.style.left = resolvedLeft + "px";
+      element.style.top = maxTopHeight + rowGap + "px";
+
+      bottomLeft = resolvedLeft + elementWidth;
+      if (bottomLeft > bottomRowWidth) {
+        bottomRowWidth = bottomLeft;
+      }
+      if (elementHeight > maxBottomHeight) {
+        maxBottomHeight = elementHeight;
+      }
     }
+
+    const contentWidth = Math.max(topRowWidth, bottomRowWidth);
+    let contentHeight = maxTopHeight;
+
+    if (secondRowCount > 0) {
+      contentHeight += rowGap + maxBottomHeight;
+      const dividerOffset = maxTopHeight + rowGap / 2;
+      booksElement.style.setProperty(
+        "--two-row-divider-top",
+        dividerOffset + "px"
+      );
+    }
+
+    booksElement.style.width = contentWidth ? contentWidth + "px" : "";
+    booksElement.style.height = contentHeight ? contentHeight + "px" : "";
   }
 
   function closeLayoutMenu() {

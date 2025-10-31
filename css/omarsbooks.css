@@ -45,6 +45,7 @@
   --book-hover-opacity: 0.18;
   --book-hover-blend-mode: multiply;
   --book-drop-outline: rgba(0, 0, 0, 0.4);
+  --two-row-gap: 40px;
   --shelf-background: rgba(255, 255, 255, 0.9);
   --shelf-border: #d9d9d9;
 }
@@ -347,7 +348,7 @@ html[data-theme="dark"] body {
 #books.layout-two-rows.orientation-horizontal {
   grid-template-rows: repeat(2, auto);
   grid-auto-flow: column;
-  row-gap: 40px;
+  row-gap: var(--two-row-gap);
 }
 
 #books.layout-two-rows.orientation-horizontal::after {
@@ -355,8 +356,8 @@ html[data-theme="dark"] body {
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(50% - 2px);
-  border-top: 40px solid var(--divider-color);
+  top: calc(var(--two-row-divider-top, 50%) - 2px);
+  border-top: var(--two-row-gap) solid var(--divider-color);
   pointer-events: none;
 }
 
