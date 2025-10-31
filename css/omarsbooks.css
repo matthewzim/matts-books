@@ -40,12 +40,12 @@
   );
   --books-view-shadow: inset 0 0 45px rgba(0, 0, 0, 0.1),
     0 20px 45px rgba(0, 0, 0, 0.1);
-  --books-view-one-row-shadow: inset 0 0 65px rgba(0, 0, 0, 0.25),
+  --books-view-overflow-shadow: inset 0 0 65px rgba(0, 0, 0, 0.25),
     -20px 35px 55px rgba(0, 0, 0, 0.2);
   --book-hover-opacity: 0.18;
   --book-hover-blend-mode: multiply;
   --book-drop-outline: rgba(0, 0, 0, 0.4);
-  --two-row-gap: 40px;
+  --book-row-gap: 40px;
   --shelf-background: rgba(255, 255, 255, 0.9);
   --shelf-border: #d9d9d9;
 }
@@ -83,7 +83,7 @@
     );
   --books-view-shadow: inset 0 0 65px rgba(0, 0, 0, 0.55),
     0 35px 55px rgba(0, 0, 0, 0.4);
-  --books-view-one-row-shadow: inset 0 0 65px rgba(0, 0, 0, 0.65),
+  --books-view-overflow-shadow: inset 0 0 65px rgba(0, 0, 0, 0.65),
     -20px 35px 55px rgba(0, 0, 0, 0.45);
   --book-hover-opacity: 0.15;
   --book-hover-blend-mode: lighten;
@@ -312,12 +312,12 @@ html[data-theme="dark"] body {
   content: none;
 }
 
-#books-view.view-one-row {
+#books-view.view-overflow {
   border-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   padding-right: 0;
-  box-shadow: var(--books-view-one-row-shadow);
+  box-shadow: var(--books-view-overflow-shadow);
 }
 
 #books-view.scroll-horizontal {
@@ -338,41 +338,29 @@ html[data-theme="dark"] body {
   align-items: end;
   justify-items: start;
   position: relative;
+  row-gap: var(--book-row-gap);
 }
 
-#books.layout-two-rows {
-  align-content: end;
-}
-
-#books.layout-one-row.orientation-horizontal {
+#books.layout-overflow.orientation-horizontal {
   grid-template-rows: repeat(1, auto);
   grid-auto-flow: column;
 }
 
-#books.layout-two-rows.orientation-horizontal {
-  grid-template-rows: repeat(2, auto);
-  grid-auto-flow: column;
-  row-gap: var(--two-row-gap);
-}
-
-#books.layout-two-rows.orientation-horizontal::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(var(--two-row-divider-top, 50%) - 2px);
-  border-top: var(--two-row-gap) solid var(--divider-color);
-  pointer-events: none;
-}
-
-#books.layout-one-row.orientation-vertical {
+#books.layout-overflow.orientation-vertical {
   grid-template-columns: repeat(1, auto);
   grid-auto-flow: row;
 }
 
-#books.layout-two-rows.orientation-vertical {
-  grid-template-columns: repeat(2, auto);
+#books.layout-wrap {
+  row-gap: var(--book-row-gap);
+}
+
+#books.layout-wrap.orientation-horizontal {
   grid-auto-flow: row;
+}
+
+#books.layout-wrap.orientation-vertical {
+  grid-auto-flow: column;
 }
 
 #books img {

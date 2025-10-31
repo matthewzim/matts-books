@@ -76,7 +76,7 @@ $(document).ready(function() {
       window.cancelAnimationFrame(arrangementFrameId);
     }
 
-    arrangementFrameId = window.requestAnimationFrame(applyTwoRowOverflowLayout);
+    arrangementFrameId = window.requestAnimationFrame(applyWrapLayout);
   }
 
   function clearBookPlacement($items) {
@@ -89,7 +89,7 @@ $(document).ready(function() {
     });
   }
 
-  function applyTwoRowOverflowLayout() {
+  function applyWrapLayout() {
     arrangementFrameId = null;
 
     const rowMode = $rowToggle.val();
@@ -104,167 +104,122 @@ $(document).ready(function() {
     if (!$items.length) {
       booksElement.style.width = "";
       booksElement.style.height = "";
-      booksElement.style.removeProperty("--two-row-divider-top");
       return;
     }
 
-    if (rowMode !== "two" || scrollMode !== "horizontal") {
-      clearBookPlacement($items);
+    clearBookPlacement($items);
+
+    const shouldArrange = rowMode === "wrap" && scrollMode === "horizontal";
+
+    if (!shouldArrange) {
       booksElement.style.width = "";
       booksElement.style.height = "";
-      booksElement.style.removeProperty("--two-row-divider-top");
       return;
     }
 
     const availableWidth = $booksView.innerWidth();
 
     if (!availableWidth) {
-      clearBookPlacement($items);
       booksElement.style.width = "";
       booksElement.style.height = "";
-      booksElement.style.removeProperty("--two-row-divider-top");
       return;
     }
 
-    clearBookPlacement($items);
-    booksElement.style.width = "";
-    booksElement.style.height = "";
-    booksElement.style.removeProperty("--two-row-divider-top");
+    const computedStyle = window.getComputedStyle(booksElement);
+    const columnGapValue = parseFloat(computedStyle.columnGap);
+    const columnGap = Number.isFinite(columnGapValue) ? columnGapValue : 0;
+    const rowGapValue = parseFloat(computedStyle.rowGap);
+    const rowGap = Number.isFinite(rowGapValue) ? rowGapValue : 0;
 
-    const totalItems = $items.length;
-    const minColumns = Math.ceil(totalItems / 2);
-    const itemWidths = $items
-      .map(function() {
-        return Math.ceil($(this).outerWidth(true));
-      })
-      .get();
-    const itemHeights = $items
-      .map(function() {
-        return Math.ceil($(this).outerHeight(true));
-      })
-      .get();
-    const gapValue = parseFloat(
-      window
-        .getComputedStyle(booksElement)
-        .getPropertyValue("--two-row-gap")
-    );
-    const rowGap = Number.isFinite(gapValue) ? gapValue : 0;
-
-    var optimalColumns = null;
-
-    for (let columns = minColumns; columns <= totalItems; columns++) {
-      let widthSum = 0;
-      const secondRowLength = totalItems - columns;
-
-      for (let columnIndex = 0; columnIndex < columns; columnIndex++) {
-        const topWidth = itemWidths[columnIndex] || 0;
-        const bottomIndex = columns + columnIndex;
-        const bottomWidth = columnIndex < secondRowLength ? itemWidths[bottomIndex] : 0;
-
-        widthSum += Math.max(topWidth, bottomWidth);
-      }
-
-      if (widthSum <= availableWidth) {
-        optimalColumns = columns;
-      }
-    }
-
-    if (optimalColumns === null) {
-      optimalColumns = minColumns;
-    }
-
-    const firstRowCount = Math.min(optimalColumns, totalItems);
-    const secondRowCount = totalItems - firstRowCount;
-
-    const topLeftOffsets = [];
+    const rows = [];
+    let currentRowItems = [];
     let currentLeft = 0;
-    let topRowWidth = 0;
-    let maxTopHeight = 0;
+    let maxRowHeight = 0;
 
-    const topRowEntries = [];
-
-    for (let index = 0; index < firstRowCount; index++) {
-      const element = $items.get(index);
-
-      if (!element) {
-        continue;
+    function finalizeRow() {
+      if (!currentRowItems.length) {
+        return;
       }
 
-      const elementWidth = itemWidths[index] || 0;
-      const elementHeight = itemHeights[index] || 0;
+      rows.push({
+        items: currentRowItems,
+        height: maxRowHeight,
+        width: currentLeft,
+      });
 
-      element.style.position = "absolute";
-      element.style.left = currentLeft + "px";
-      element.style.top = "0px";
-
-      topLeftOffsets.push(currentLeft);
-      currentLeft += elementWidth;
-      topRowWidth = currentLeft;
-      if (elementHeight > maxTopHeight) {
-        maxTopHeight = elementHeight;
-      }
-
-      topRowEntries.push({ element, height: elementHeight });
+      currentRowItems = [];
+      currentLeft = 0;
+      maxRowHeight = 0;
     }
 
-    let bottomLeft = 0;
-    let bottomRowWidth = 0;
-    let maxBottomHeight = 0;
+    $items.each(function() {
+      const element = this;
+      const $element = $(element);
+      const elementWidth = Math.ceil($element.outerWidth(true)) || 0;
+      const elementHeight = Math.ceil($element.outerHeight(true)) || 0;
 
-    const bottomRowEntries = [];
+      let nextLeft = currentRowItems.length ? currentLeft + columnGap : 0;
+      let predictedWidth = nextLeft + elementWidth;
 
-    for (let index = 0; index < secondRowCount; index++) {
-      const element = $items.get(firstRowCount + index);
-
-      if (!element) {
-        continue;
+      if (
+        currentRowItems.length &&
+        availableWidth &&
+        predictedWidth > availableWidth
+      ) {
+        finalizeRow();
+        nextLeft = 0;
+        predictedWidth = elementWidth;
       }
 
-      const elementWidth = itemWidths[firstRowCount + index] || 0;
-      const elementHeight = itemHeights[firstRowCount + index] || 0;
-      const preferredLeft =
-        topLeftOffsets[index] !== undefined ? topLeftOffsets[index] : bottomLeft;
-      const resolvedLeft = Math.max(preferredLeft, bottomLeft);
+      currentRowItems.push({
+        element,
+        width: elementWidth,
+        height: elementHeight,
+        left: nextLeft,
+      });
 
-      element.style.position = "absolute";
-      element.style.left = resolvedLeft + "px";
-      element.style.top = maxTopHeight + rowGap + "px";
+      currentLeft = predictedWidth;
 
-      bottomLeft = resolvedLeft + elementWidth;
-      if (bottomLeft > bottomRowWidth) {
-        bottomRowWidth = bottomLeft;
+      if (elementHeight > maxRowHeight) {
+        maxRowHeight = elementHeight;
       }
-      if (elementHeight > maxBottomHeight) {
-        maxBottomHeight = elementHeight;
-      }
-
-      bottomRowEntries.push({ element, height: elementHeight });
-    }
-
-    topRowEntries.forEach(function(entry) {
-      const offset = maxTopHeight - entry.height;
-      entry.element.style.top = offset > 0 ? offset + "px" : "0px";
     });
 
-    bottomRowEntries.forEach(function(entry) {
-      const baseline = maxTopHeight + rowGap;
-      const offset = baseline + (maxBottomHeight - entry.height);
-      entry.element.style.top = offset > 0 ? offset + "px" : baseline + "px";
-    });
+    finalizeRow();
 
-    const contentWidth = Math.max(topRowWidth, bottomRowWidth);
-    let contentHeight = maxTopHeight;
-
-    if (secondRowCount > 0) {
-      contentHeight += rowGap + maxBottomHeight;
-      const dividerOffset = maxTopHeight + rowGap / 2;
-      booksElement.style.setProperty(
-        "--two-row-divider-top",
-        dividerOffset + "px"
-      );
+    if (!rows.length) {
+      booksElement.style.width = "";
+      booksElement.style.height = "";
+      return;
     }
 
-    booksElement.style.width = contentWidth ? contentWidth + "px" : "";
+    let contentHeight = 0;
+    let maxRowWidth = 0;
+
+    rows.forEach(function(row, rowIndex) {
+      if (row.width > maxRowWidth) {
+        maxRowWidth = row.width;
+      }
+
+      const baseTop = contentHeight;
+
+      row.items.forEach(function(item) {
+        const offset = row.height - item.height;
+        const topPosition = baseTop + (offset > 0 ? offset : 0);
+
+        item.element.style.position = "absolute";
+        item.element.style.left = item.left + "px";
+        item.element.style.top = topPosition + "px";
+      });
+
+      contentHeight += row.height;
+
+      if (rowIndex < rows.length - 1) {
+        contentHeight += rowGap;
+      }
+    });
+
+    booksElement.style.width = maxRowWidth ? maxRowWidth + "px" : "";
     booksElement.style.height = contentHeight ? contentHeight + "px" : "";
   }
 
@@ -306,14 +261,18 @@ $(document).ready(function() {
     const scrollMode = $scrollToggle.val();
 
     $books
-      .removeClass("layout-one-row layout-two-rows orientation-horizontal orientation-vertical")
-      .addClass(rowMode === "one" ? "layout-one-row" : "layout-two-rows")
-      .addClass(scrollMode === "horizontal" ? "orientation-horizontal" : "orientation-vertical");
+      .removeClass(
+        "layout-overflow layout-wrap orientation-horizontal orientation-vertical"
+      )
+      .addClass(rowMode === "wrap" ? "layout-wrap" : "layout-overflow")
+      .addClass(
+        scrollMode === "horizontal" ? "orientation-horizontal" : "orientation-vertical"
+      );
 
     $booksView
-      .removeClass("scroll-horizontal scroll-vertical view-one-row view-two-rows")
+      .removeClass("scroll-horizontal scroll-vertical view-overflow view-wrap")
       .addClass(scrollMode === "horizontal" ? "scroll-horizontal" : "scroll-vertical")
-      .addClass(rowMode === "one" ? "view-one-row" : "view-two-rows");
+      .addClass(rowMode === "overflow" ? "view-overflow" : "view-wrap");
 
     scheduleBookArrangement();
   }
