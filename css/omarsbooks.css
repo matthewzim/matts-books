@@ -209,7 +209,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  border: 40px solid rgba(255, 244, 231, 0.18);
+  border: 40px solid rgba(123, 74, 33, 1);
   padding: 0px;
   box-sizing: border-box;
   position: relative;
