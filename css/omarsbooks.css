@@ -42,6 +42,8 @@
     0 20px 45px rgba(0, 0, 0, 0.1);
   --books-view-overflow-shadow: inset 0 0 65px rgba(0, 0, 0, 0.25),
     -20px 35px 55px rgba(0, 0, 0, 0.2);
+  --books-view-border-width: 40px;
+  --shelf-thickness: var(--books-view-border-width);
   --book-hover-opacity: 0.18;
   --book-hover-blend-mode: multiply;
   --book-drop-outline: rgba(0, 0, 0, 0.4);
@@ -85,6 +87,8 @@
     0 35px 55px rgba(0, 0, 0, 0.4);
   --books-view-overflow-shadow: inset 0 0 65px rgba(0, 0, 0, 0.65),
     -20px 35px 55px rgba(0, 0, 0, 0.45);
+  --books-view-border-width: 40px;
+  --shelf-thickness: var(--books-view-border-width);
   --book-hover-opacity: 0.15;
   --book-hover-blend-mode: lighten;
   --book-drop-outline: rgba(255, 255, 255, 0.7);
@@ -297,7 +301,7 @@ html[data-theme="dark"] body {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  border: 40px solid var(--books-view-border);
+  border: var(--books-view-border-width) solid var(--books-view-border);
   padding: 0px;
   box-sizing: border-box;
   position: relative;
@@ -339,6 +343,7 @@ html[data-theme="dark"] body {
   justify-items: start;
   position: relative;
   row-gap: var(--book-row-gap);
+  padding-bottom: var(--shelf-thickness);
 }
 
 #books.layout-overflow.orientation-horizontal {
@@ -378,6 +383,8 @@ html[data-theme="dark"] body {
   justify-self: start;
   cursor: grab;
   transition: transform 0.15s ease, opacity 0.15s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .book-images:hover {
@@ -403,6 +410,16 @@ html[data-theme="dark"] body {
   opacity: 1 !important;
   outline: 2px dashed var(--book-drop-outline);
   outline-offset: 2px;
+}
+
+.book-shelf {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--shelf-thickness);
+  background: var(--books-view-border);
+  pointer-events: none;
+  z-index: 0;
 }
 
 #shelf-desktop {
