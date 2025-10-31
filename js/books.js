@@ -1,11 +1,47 @@
 $(document).ready(function() {
   const $books = $("#books");
   const $booksView = $("#books-view");
+  const $layoutControls = $("#layout-controls");
+  const $bottomMenu = $("#bottom-menu");
+  const $menuToggle = $("#layout-menu-toggle");
   const $rowToggle = $("#row-toggle");
   const $scrollToggle = $("#scroll-toggle");
   const $interactionToggle = $("#interaction-toggle");
   let interactionMode = $interactionToggle.val();
   let draggedElement = null;
+
+  function closeLayoutMenu() {
+    if (!$bottomMenu.hasClass("is-open")) {
+      return;
+    }
+
+    $bottomMenu.removeClass("is-open");
+    $menuToggle.attr("aria-expanded", "false");
+    $layoutControls.attr("aria-hidden", "true");
+  }
+
+  $menuToggle.on("click", function(event) {
+    event.stopPropagation();
+
+    const willOpen = !$bottomMenu.hasClass("is-open");
+    $bottomMenu.toggleClass("is-open", willOpen);
+    $menuToggle.attr("aria-expanded", willOpen);
+    $layoutControls.attr("aria-hidden", !willOpen);
+  });
+
+  $layoutControls.on("click", function(event) {
+    event.stopPropagation();
+  });
+
+  $(document).on("click", function() {
+    closeLayoutMenu();
+  });
+
+  $(document).on("keydown", function(event) {
+    if (event.key === "Escape") {
+      closeLayoutMenu();
+    }
+  });
 
   function applyLayout() {
     const rowMode = $rowToggle.val();
@@ -211,4 +247,17 @@ $(document).ready(function() {
 
   applyLayout();
   applyInteractionMode();
+
+  // Keep controls accessible for keyboard navigation when opened via focus.
+  $menuToggle.on("focusout", function(event) {
+    if ($bottomMenu.has(event.relatedTarget).length === 0) {
+      closeLayoutMenu();
+    }
+  });
+
+  $layoutControls.on("focusout", function(event) {
+    if ($bottomMenu.has(event.relatedTarget).length === 0) {
+      closeLayoutMenu();
+    }
+  });
 });
