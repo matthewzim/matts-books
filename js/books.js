@@ -11,6 +11,7 @@ $(document).ready(function() {
   const BASE_SCALE = 1.25;
   const MIN_VARIATION = 0.9;
   const MAX_VARIATION = 1.1;
+  const OVERFLOW_END_CLASS = "is-at-end";
   let arrangementFrameId = null;
   let interactionMode = $interactionToggle.val();
   let draggedElement = null;
@@ -78,6 +79,26 @@ $(document).ready(function() {
     arrangementFrameId = window.requestAnimationFrame(applyWrapLayout);
   }
 
+  function updateOverflowBorderState() {
+    const element = $booksView.get(0);
+
+    if (!element) {
+      return;
+    }
+
+    if ($rowToggle.val() !== "overflow") {
+      $booksView.removeClass(OVERFLOW_END_CLASS);
+      return;
+    }
+
+    const maxScrollLeft = Math.max(element.scrollWidth - element.clientWidth, 0);
+    const threshold = 1;
+    const isAtEnd =
+      maxScrollLeft <= threshold || element.scrollLeft >= maxScrollLeft - threshold;
+
+    $booksView.toggleClass(OVERFLOW_END_CLASS, isAtEnd);
+  }
+
   function clearBookPlacement($items) {
     $items.each(function() {
       this.style.gridRow = "";
@@ -96,12 +117,14 @@ $(document).ready(function() {
     const booksElement = $books.get(0);
 
     if (!booksElement) {
+      updateOverflowBorderState();
       return;
     }
 
     if (!$items.length) {
       booksElement.style.width = "";
       booksElement.style.height = "";
+      updateOverflowBorderState();
       return;
     }
 
@@ -112,6 +135,7 @@ $(document).ready(function() {
     if (!shouldArrange) {
       booksElement.style.width = "";
       booksElement.style.height = "";
+      updateOverflowBorderState();
       return;
     }
 
@@ -120,6 +144,7 @@ $(document).ready(function() {
     if (!availableWidth) {
       booksElement.style.width = "";
       booksElement.style.height = "";
+      updateOverflowBorderState();
       return;
     }
 
@@ -188,6 +213,7 @@ $(document).ready(function() {
     if (!rows.length) {
       booksElement.style.width = "";
       booksElement.style.height = "";
+      updateOverflowBorderState();
       return;
     }
 
@@ -219,6 +245,7 @@ $(document).ready(function() {
 
     booksElement.style.width = maxRowWidth ? maxRowWidth + "px" : "";
     booksElement.style.height = contentHeight ? contentHeight + "px" : "";
+    updateOverflowBorderState();
   }
 
   function closeLayoutMenu() {
@@ -266,6 +293,7 @@ $(document).ready(function() {
       .addClass("scroll-horizontal")
       .addClass(rowMode === "overflow" ? "view-overflow" : "view-wrap");
 
+    updateOverflowBorderState();
     scheduleBookArrangement();
   }
 
@@ -376,6 +404,7 @@ $(document).ready(function() {
   function handleWindowResize() {
     updateAllBookDimensions();
     scheduleBookArrangement();
+    updateOverflowBorderState();
   }
 
   function initializeDragAndDrop() {
@@ -479,6 +508,8 @@ $(document).ready(function() {
       }
     });
   }
+
+  $booksView.on("scroll", updateOverflowBorderState);
 
   applyLayout();
   applyInteractionMode();
