@@ -16,7 +16,7 @@
 :root {
   --frame-size: clamp(16px, 4vw, 40px);
   --frame-color: #ffffff;
-  --frame-shadow: #d6d6d6;
+  --frame-shadow: #ffffff;
   --frame-highlight: #ffffff;
   --background-color: #f3f3f3;
   --background-highlight: #f9f9f9;
