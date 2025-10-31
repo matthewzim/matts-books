@@ -79,7 +79,17 @@ $(document).ready(function() {
 
     secondRow.forEach(function(element, index) {
       element.style.gridRow = "2";
-      element.style.gridColumn = String(firstRow.length + index + 1);
+
+      var columnIndex;
+
+      if (index < firstRow.length) {
+        columnIndex = index + 1;
+      } else {
+        var overflowIndex = index - firstRow.length;
+        columnIndex = firstRow.length + overflowIndex + 1;
+      }
+
+      element.style.gridColumn = String(columnIndex);
     });
   }
 
