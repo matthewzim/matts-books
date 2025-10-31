@@ -43,7 +43,7 @@ $(document).ready(function() {
         return;
       }
 
-      $("#number").html("(#" + books[this.id - 1].Number + ")");
+      $("#number").html("");
       $("#title").html(books[this.id - 1].Title);
       $("#author").html(books[this.id - 1].Author);
       $("#description").css("display", "flex");
