@@ -15,10 +15,10 @@
 
 :root {
   --frame-size: clamp(16px, 4vw, 40px);
-  --frame-color: #f3f3f3;
+  --frame-color: #ffffff;
   --frame-shadow: #d6d6d6;
   --frame-highlight: #ffffff;
-  --background-color: #ffffff;
+  --background-color: #f3f3f3;
   --background-highlight: #f9f9f9;
   --divider-color: #d9d9d9;
   --text-color: #222222;
