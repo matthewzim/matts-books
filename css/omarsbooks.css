@@ -325,11 +325,6 @@ html[data-theme="dark"] body {
   overflow-y: hidden;
 }
 
-#books-view.scroll-vertical {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
 #books {
   display: grid;
   grid-auto-rows: max-content;
@@ -346,21 +341,12 @@ html[data-theme="dark"] body {
   grid-auto-flow: column;
 }
 
-#books.layout-overflow.orientation-vertical {
-  grid-template-columns: repeat(1, auto);
-  grid-auto-flow: row;
-}
-
 #books.layout-wrap {
   row-gap: var(--book-row-gap);
 }
 
 #books.layout-wrap.orientation-horizontal {
   grid-auto-flow: row;
-}
-
-#books.layout-wrap.orientation-vertical {
-  grid-auto-flow: column;
 }
 
 #books img {

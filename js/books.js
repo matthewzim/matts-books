@@ -6,7 +6,6 @@ $(document).ready(function() {
   const $menuToggle = $("#layout-menu-toggle");
   const $themeToggle = $("#theme-toggle");
   const $rowToggle = $("#row-toggle");
-  const $scrollToggle = $("#scroll-toggle");
   const $interactionToggle = $("#interaction-toggle");
   const rootElement = document.documentElement;
   const BASE_SCALE = 1.25;
@@ -93,7 +92,6 @@ $(document).ready(function() {
     arrangementFrameId = null;
 
     const rowMode = $rowToggle.val();
-    const scrollMode = $scrollToggle.val();
     const $items = $books.children(".book-images");
     const booksElement = $books.get(0);
 
@@ -109,7 +107,7 @@ $(document).ready(function() {
 
     clearBookPlacement($items);
 
-    const shouldArrange = rowMode === "wrap" && scrollMode === "horizontal";
+    const shouldArrange = rowMode === "wrap";
 
     if (!shouldArrange) {
       booksElement.style.width = "";
@@ -258,20 +256,14 @@ $(document).ready(function() {
 
   function applyLayout() {
     const rowMode = $rowToggle.val();
-    const scrollMode = $scrollToggle.val();
-
     $books
-      .removeClass(
-        "layout-overflow layout-wrap orientation-horizontal orientation-vertical"
-      )
+      .removeClass("layout-overflow layout-wrap orientation-horizontal")
       .addClass(rowMode === "wrap" ? "layout-wrap" : "layout-overflow")
-      .addClass(
-        scrollMode === "horizontal" ? "orientation-horizontal" : "orientation-vertical"
-      );
+      .addClass("orientation-horizontal");
 
     $booksView
-      .removeClass("scroll-horizontal scroll-vertical view-overflow view-wrap")
-      .addClass(scrollMode === "horizontal" ? "scroll-horizontal" : "scroll-vertical")
+      .removeClass("scroll-horizontal view-overflow view-wrap")
+      .addClass("scroll-horizontal")
       .addClass(rowMode === "overflow" ? "view-overflow" : "view-wrap");
 
     scheduleBookArrangement();
@@ -288,7 +280,6 @@ $(document).ready(function() {
   }
 
   $rowToggle.on("change", applyLayout);
-  $scrollToggle.on("change", applyLayout);
   $interactionToggle.on("change", applyInteractionMode);
   $themeToggle.on("change", applyTheme);
 
