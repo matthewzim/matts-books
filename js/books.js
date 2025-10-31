@@ -53,8 +53,9 @@ $(document).ready(function() {
       .addClass(scrollMode === "horizontal" ? "orientation-horizontal" : "orientation-vertical");
 
     $booksView
-      .removeClass("scroll-horizontal scroll-vertical")
-      .addClass(scrollMode === "horizontal" ? "scroll-horizontal" : "scroll-vertical");
+      .removeClass("scroll-horizontal scroll-vertical view-one-row view-two-rows")
+      .addClass(scrollMode === "horizontal" ? "scroll-horizontal" : "scroll-vertical")
+      .addClass(rowMode === "one" ? "view-one-row" : "view-two-rows");
   }
 
   $rowToggle.on("change", applyLayout);
