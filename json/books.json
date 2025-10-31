@@ -93,9 +93,40 @@
    "Number": 19,
    "Title": "Originals",
    "Author": "Adam Grant"
+ },
+   {
+   "Number": 20,
+   "Title": "The Collected Tales of Edgar Allan Poe",
+   "Author": "Edgar Allan Poe"
+ },
+   {
+   "Number": 21,
+   "Title": "The Count of Monte Cristo",
+   "Author": "Alexandre Dumas"
+ }, 
+   {
+   "Number": 22,
+   "Title": "The Odyssey",
+   "Author": "Homer"
+ }, 
+   {
+   "Number": 23,
+   "Title": "The Little Black Book of Innovation",
+   "Author": "Scott D. Anthony"
+ },   
+ {
+   "Number": 24,
+   "Title": "Side Hustle",
+   "Author": "Chris Guillebeau"
+ }, 
+ {
+   "Number": 25,
+   "Title": "On the Brink",
+   "Author": "Andi Simon"
  }
 ]
  
+
 
 
 
