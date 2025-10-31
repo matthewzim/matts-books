@@ -28,29 +28,6 @@
         </div>
       </div>
       <div id="books-container">
-        <div id="layout-controls">
-          <label for="row-toggle">
-            <span>Rows</span>
-            <select id="row-toggle">
-              <option value="two" selected>Two rows</option>
-              <option value="one">One row</option>
-            </select>
-          </label>
-          <label for="scroll-toggle">
-            <span>Scroll</span>
-            <select id="scroll-toggle">
-              <option value="horizontal" selected>Horizontal</option>
-              <option value="vertical">Vertical</option>
-            </select>
-          </label>
-          <label for="interaction-toggle">
-            <span>Interaction</span>
-            <select id="interaction-toggle">
-              <option value="drag" selected>Drag &amp; drop</option>
-              <option value="info">View info</option>
-            </select>
-          </label>
-        </div>
         <div id="books-view">
           <div id="books">
             <!-- <img v-for="book in books" v-bind:id="book.Number" v-bind:src=" 'jpg/' + book.Number + '.jpg' " alt=""> -->
@@ -60,6 +37,34 @@
       <div id="shelf-desktop">
         <div>
           MATT'S BOOKS
+        </div>
+        <div id="bottom-menu">
+          <button id="layout-menu-toggle" type="button" aria-expanded="false" aria-controls="layout-controls">
+            Display options
+          </button>
+          <div id="layout-controls" aria-hidden="true">
+            <label for="row-toggle">
+              <span>Rows</span>
+              <select id="row-toggle">
+                <option value="two" selected>Two rows</option>
+                <option value="one">One row</option>
+              </select>
+            </label>
+            <label for="scroll-toggle">
+              <span>Scroll</span>
+              <select id="scroll-toggle">
+                <option value="horizontal" selected>Horizontal</option>
+                <option value="vertical">Vertical</option>
+              </select>
+            </label>
+            <label for="interaction-toggle">
+              <span>Interaction</span>
+              <select id="interaction-toggle">
+                <option value="drag" selected>Drag &amp; drop</option>
+                <option value="info">View info</option>
+              </select>
+            </label>
+          </div>
         </div>
         <div id = "time">
 
