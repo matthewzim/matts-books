@@ -3,6 +3,9 @@ $(document).ready(function() {
   const $booksView = $("#books-view");
   const $rowToggle = $("#row-toggle");
   const $scrollToggle = $("#scroll-toggle");
+  const $interactionToggle = $("#interaction-toggle");
+  let interactionMode = $interactionToggle.val();
+  let draggedElement = null;
 
   function applyLayout() {
     const rowMode = $rowToggle.val();
@@ -20,6 +23,7 @@ $(document).ready(function() {
 
   $rowToggle.on("change", applyLayout);
   $scrollToggle.on("change", applyLayout);
+  $interactionToggle.on("change", applyInteractionMode);
 
   $.getJSON("json/books.json", function(books) {
     var length = books.length;
@@ -34,19 +38,48 @@ $(document).ready(function() {
 
     $("#reading-book").html(books[length - 1].Title);
 
-    $(".book-images").hover(function() {
+    $books.on("mouseenter", ".book-images", function() {
+      if (interactionMode !== "info") {
+        return;
+      }
+
       $("#number").html("(#" + books[this.id - 1].Number + ")");
       $("#title").html(books[this.id - 1].Title);
       $("#author").html(books[this.id - 1].Author);
-      // console.log(this.id);
       $("#description").css("display", "flex");
-    }, function() {
+    });
+
+    $books.on("mouseleave", ".book-images", function() {
+      if (interactionMode !== "info") {
+        return;
+      }
+
       $("#description").css("display", "none");
     });
+
     applyLayout();
+    applyInteractionMode();
   });
 
   initializeDragAndDrop();
+
+  function applyInteractionMode() {
+    interactionMode = $interactionToggle.val();
+    const isDragMode = interactionMode === "drag";
+
+    $books
+      .toggleClass("mode-drag", isDragMode)
+      .toggleClass("mode-info", !isDragMode)
+      .find(".book-images")
+      .attr("draggable", isDragMode);
+
+    if (isDragMode) {
+      $("#description").css("display", "none");
+    } else {
+      draggedElement = null;
+      $books.find(".book-images").removeClass("is-dragging drop-target");
+    }
+  }
 
   function getSize(number) {
     var img = document.getElementById(number);
@@ -79,9 +112,12 @@ $(document).ready(function() {
   }
 
   function initializeDragAndDrop() {
-    var draggedElement = null;
-
     $books.on("dragstart", ".book-images", function(event) {
+      if (interactionMode !== "drag") {
+        event.preventDefault();
+        return;
+      }
+
       draggedElement = this;
       event.originalEvent.dataTransfer.effectAllowed = "move";
       event.originalEvent.dataTransfer.setData("text/plain", this.id);
@@ -89,27 +125,47 @@ $(document).ready(function() {
     });
 
     $books.on("dragend", ".book-images", function() {
+      if (interactionMode !== "drag") {
+        return;
+      }
+
       $(this).removeClass("is-dragging");
       $books.find(".drop-target").removeClass("drop-target");
       draggedElement = null;
     });
 
     $books.on("dragenter", ".book-images", function() {
+      if (interactionMode !== "drag") {
+        return;
+      }
+
       if (this !== draggedElement) {
         $(this).addClass("drop-target");
       }
     });
 
     $books.on("dragover", ".book-images", function(event) {
+      if (interactionMode !== "drag") {
+        return;
+      }
+
       event.preventDefault();
       event.originalEvent.dataTransfer.dropEffect = "move";
     });
 
     $books.on("dragleave", ".book-images", function() {
+      if (interactionMode !== "drag") {
+        return;
+      }
+
       $(this).removeClass("drop-target");
     });
 
     $books.on("drop", ".book-images", function(event) {
+      if (interactionMode !== "drag") {
+        return;
+      }
+
       event.preventDefault();
       event.stopPropagation();
       $(this).removeClass("drop-target");
@@ -129,11 +185,19 @@ $(document).ready(function() {
     });
 
     $books.on("dragover", function(event) {
+      if (interactionMode !== "drag") {
+        return;
+      }
+
       event.preventDefault();
       event.originalEvent.dataTransfer.dropEffect = "move";
     });
 
     $books.on("drop", function(event) {
+      if (interactionMode !== "drag") {
+        return;
+      }
+
       event.preventDefault();
 
       if (!draggedElement) {
@@ -147,4 +211,5 @@ $(document).ready(function() {
   }
 
   applyLayout();
+  applyInteractionMode();
 });
