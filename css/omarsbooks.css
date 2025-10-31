@@ -340,6 +340,10 @@ html[data-theme="dark"] body {
   position: relative;
 }
 
+#books.layout-two-rows {
+  align-content: end;
+}
+
 #books.layout-one-row.orientation-horizontal {
   grid-template-rows: repeat(1, auto);
   grid-auto-flow: column;
