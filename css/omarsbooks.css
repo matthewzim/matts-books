@@ -249,7 +249,7 @@ body {
   position: fixed;
   left: var(--frame-size);
   right: var(--frame-size);
-  bottom: var(--frame-size);
+  bottom: 0;
   font-size: 20px;
   border-top: 1px solid white;
   display: flex;
@@ -273,7 +273,7 @@ body {
   position: fixed;
   left: var(--frame-size);
   right: var(--frame-size);
-  bottom: var(--frame-size);
+  bottom: 0;
   background-color: rgba(58, 36, 18, 0.9);
 }
 
