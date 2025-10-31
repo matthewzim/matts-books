@@ -79,7 +79,7 @@ $(document).ready(function() {
 
     secondRow.forEach(function(element, index) {
       element.style.gridRow = "2";
-      element.style.gridColumn = String(index + 1);
+      element.style.gridColumn = String(firstRow.length + index + 1);
     });
   }
 
