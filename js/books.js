@@ -89,87 +89,6 @@ $(document).ready(function() {
     });
   }
 
-  function updateShelves() {
-    const booksElement = $books.get(0);
-
-    if (!booksElement) {
-      return;
-    }
-
-    const shelves = Array.from(booksElement.querySelectorAll(".book-shelf"));
-    const bookItems = $books.children(".book-images");
-    const isHorizontal = $books.hasClass("orientation-horizontal");
-
-    if (!isHorizontal || !bookItems.length) {
-      shelves.forEach(function(shelf) {
-        shelf.remove();
-      });
-      return;
-    }
-
-    const bottoms = [];
-
-    bookItems.each(function() {
-      if (!this.offsetParent) {
-        return;
-      }
-
-      const height = this.offsetHeight;
-
-      if (!height) {
-        return;
-      }
-
-      const bottom = Math.round(this.offsetTop + height);
-      bottoms.push(bottom);
-    });
-
-    if (!bottoms.length) {
-      shelves.forEach(function(shelf) {
-        shelf.remove();
-      });
-      return;
-    }
-
-    bottoms.sort(function(a, b) {
-      return a - b;
-    });
-
-    const rowBottoms = [];
-
-    bottoms.forEach(function(bottom) {
-      if (
-        !rowBottoms.length ||
-        Math.abs(bottom - rowBottoms[rowBottoms.length - 1]) > 1
-      ) {
-        rowBottoms.push(bottom);
-      }
-    });
-
-    while (shelves.length < rowBottoms.length) {
-      const shelf = document.createElement("div");
-      shelf.className = "book-shelf";
-      booksElement.appendChild(shelf);
-      shelves.push(shelf);
-    }
-
-    while (shelves.length > rowBottoms.length) {
-      const shelf = shelves.pop();
-
-      if (shelf) {
-        shelf.remove();
-      }
-    }
-
-    shelves.forEach(function(shelf, index) {
-      const bottom = rowBottoms[index];
-
-      if (typeof bottom === "number") {
-        shelf.style.top = bottom + "px";
-      }
-    });
-  }
-
   function applyWrapLayout() {
     arrangementFrameId = null;
 
@@ -179,14 +98,12 @@ $(document).ready(function() {
     const booksElement = $books.get(0);
 
     if (!booksElement) {
-      updateShelves();
       return;
     }
 
     if (!$items.length) {
       booksElement.style.width = "";
       booksElement.style.height = "";
-      updateShelves();
       return;
     }
 
@@ -197,7 +114,6 @@ $(document).ready(function() {
     if (!shouldArrange) {
       booksElement.style.width = "";
       booksElement.style.height = "";
-      updateShelves();
       return;
     }
 
@@ -206,7 +122,6 @@ $(document).ready(function() {
     if (!availableWidth) {
       booksElement.style.width = "";
       booksElement.style.height = "";
-      updateShelves();
       return;
     }
 
@@ -275,7 +190,6 @@ $(document).ready(function() {
     if (!rows.length) {
       booksElement.style.width = "";
       booksElement.style.height = "";
-      updateShelves();
       return;
     }
 
@@ -307,8 +221,6 @@ $(document).ready(function() {
 
     booksElement.style.width = maxRowWidth ? maxRowWidth + "px" : "";
     booksElement.style.height = contentHeight ? contentHeight + "px" : "";
-
-    updateShelves();
   }
 
   function closeLayoutMenu() {
