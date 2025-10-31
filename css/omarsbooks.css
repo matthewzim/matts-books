@@ -335,7 +335,7 @@ html[data-theme="dark"] body {
   grid-auto-columns: max-content;
   gap: 0;
   align-items: end;
-  justify-items: center;
+  justify-items: start;
   position: relative;
 }
 
@@ -381,7 +381,8 @@ html[data-theme="dark"] body {
 }
 
 .book-images {
-  margin-left: 0px;
+  margin: 0;
+  justify-self: start;
   cursor: grab;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
