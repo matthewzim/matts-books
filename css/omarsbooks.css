@@ -274,7 +274,7 @@ body {
   left: 0;
   right: 0;
   top: calc(50% - 2px);
-  border-top: 4px solid #7b4a21;
+  border-top: 20px solid #7b4a21;
   pointer-events: none;
 }
 
