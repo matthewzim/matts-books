@@ -232,27 +232,7 @@ body {
 
 #books-view::before,
 #books-view::after {
-  content: "";
-  position: absolute;
-  background: var(--divider-color);
-  pointer-events: none;
-  z-index: 1;
-}
-
-#books-view::before {
-  top: 18px;
-  bottom: 18px;
-  left: 18px;
-  width: 6px;
-  border-radius: 999px;
-}
-
-#books-view::after {
-  top: 18px;
-  left: 18px;
-  right: 18px;
-  height: 6px;
-  border-radius: 999px;
+  content: none;
 }
 
 #books-view.view-one-row {
