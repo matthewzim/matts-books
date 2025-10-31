@@ -4,9 +4,11 @@ $(document).ready(function() {
   const $layoutControls = $("#layout-controls");
   const $bottomMenu = $("#bottom-menu");
   const $menuToggle = $("#layout-menu-toggle");
+  const $themeToggle = $("#theme-toggle");
   const $rowToggle = $("#row-toggle");
   const $scrollToggle = $("#scroll-toggle");
   const $interactionToggle = $("#interaction-toggle");
+  const rootElement = document.documentElement;
   let interactionMode = $interactionToggle.val();
   let draggedElement = null;
 
@@ -58,9 +60,34 @@ $(document).ready(function() {
       .addClass(rowMode === "one" ? "view-one-row" : "view-two-rows");
   }
 
+  function applyTheme() {
+    const theme = $themeToggle.val();
+    rootElement.setAttribute("data-theme", theme);
+    try {
+      localStorage.setItem("mb-theme", theme);
+    } catch (error) {
+      // Ignore storage errors (e.g. private mode)
+    }
+  }
+
   $rowToggle.on("change", applyLayout);
   $scrollToggle.on("change", applyLayout);
   $interactionToggle.on("change", applyInteractionMode);
+  $themeToggle.on("change", applyTheme);
+
+  const storedTheme = (function() {
+    try {
+      return localStorage.getItem("mb-theme");
+    } catch (error) {
+      return null;
+    }
+  })();
+
+  if (storedTheme === "dark" || storedTheme === "light") {
+    $themeToggle.val(storedTheme);
+  }
+
+  applyTheme();
 
   $.getJSON("json/books.json", function(books) {
     var length = books.length;
@@ -248,6 +275,7 @@ $(document).ready(function() {
 
   applyLayout();
   applyInteractionMode();
+  applyTheme();
 
   // Keep controls accessible for keyboard navigation when opened via focus.
   $menuToggle.on("focusout", function(event) {
