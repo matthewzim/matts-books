@@ -63,17 +63,99 @@ body {
 
 #books-container {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 70px;
-  /* background-color: red; */
+}
+
+#layout-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: AKZTEST;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#layout-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  min-width: 140px;
+}
+
+#layout-controls select {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 4px 8px;
+  font-family: inherit;
+  font-size: 14px;
+  text-transform: none;
+}
+
+#layout-controls span {
+  font-size: 12px;
+}
+
+#layout-controls select:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+#books-view {
+  width: 90vw;
+  max-width: 1200px;
+  max-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+#books-view.scroll-horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+#books-view.scroll-vertical {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #books {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: flex-end;  /* bottom alignment */
-  gap: 0;                 /* no space between spines */
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-auto-columns: max-content;
+  gap: 0;
+  align-items: end;
+  justify-items: center;
+}
+
+#books.layout-one-row.orientation-horizontal {
+  grid-template-rows: repeat(1, auto);
+  grid-auto-flow: column;
+}
+
+#books.layout-two-rows.orientation-horizontal {
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;
+}
+
+#books.layout-one-row.orientation-vertical {
+  grid-template-columns: repeat(1, auto);
+  grid-auto-flow: row;
+}
+
+#books.layout-two-rows.orientation-vertical {
+  grid-template-columns: repeat(2, auto);
+  grid-auto-flow: row;
 }
 
 #books img {
