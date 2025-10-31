@@ -229,6 +229,14 @@ body {
   box-shadow: inset 0 0 65px rgba(0, 0, 0, 0.5), 0 35px 55px rgba(0, 0, 0, 0.4);
 }
 
+#books-view.view-one-row {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-right: 0;
+  box-shadow: inset 0 0 65px rgba(0, 0, 0, 0.5), -20px 35px 55px rgba(0, 0, 0, 0.4);
+}
+
 #books-view.scroll-horizontal {
   overflow-x: auto;
   overflow-y: hidden;
@@ -246,6 +254,7 @@ body {
   gap: 0;
   align-items: end;
   justify-items: center;
+  position: relative;
 }
 
 #books.layout-one-row.orientation-horizontal {
@@ -256,6 +265,17 @@ body {
 #books.layout-two-rows.orientation-horizontal {
   grid-template-rows: repeat(2, auto);
   grid-auto-flow: column;
+  row-gap: 40px;
+}
+
+#books.layout-two-rows.orientation-horizontal::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% - 2px);
+  border-top: 4px solid #7b4a21;
+  pointer-events: none;
 }
 
 #books.layout-one-row.orientation-vertical {
