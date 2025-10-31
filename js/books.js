@@ -53,44 +53,61 @@ $(document).ready(function() {
 
     clearBookPlacement($items);
 
-    const firstRow = [];
-    const secondRow = [];
-    let widthUsed = 0;
+    const totalItems = $items.length;
+    const minColumns = Math.ceil(totalItems / 2);
+    const itemWidths = $items
+      .map(function() {
+        return Math.ceil($(this).outerWidth(true));
+      })
+      .get();
 
-    $items.each(function() {
-      const $item = $(this);
-      const itemWidth = Math.ceil($item.outerWidth(true));
-      const fitsInFirstRow =
-        secondRow.length === 0 &&
-        (widthUsed === 0 || widthUsed + itemWidth <= availableWidth);
+    var optimalColumns = null;
 
-      if (fitsInFirstRow) {
-        firstRow.push(this);
-        widthUsed += itemWidth;
-      } else {
-        secondRow.push(this);
+    for (let columns = minColumns; columns <= totalItems; columns++) {
+      let widthSum = 0;
+      const secondRowLength = totalItems - columns;
+
+      for (let columnIndex = 0; columnIndex < columns; columnIndex++) {
+        const topWidth = itemWidths[columnIndex] || 0;
+        const bottomIndex = columns + columnIndex;
+        const bottomWidth = columnIndex < secondRowLength ? itemWidths[bottomIndex] : 0;
+
+        widthSum += Math.max(topWidth, bottomWidth);
       }
-    });
 
-    firstRow.forEach(function(element, index) {
+      if (widthSum <= availableWidth) {
+        optimalColumns = columns;
+      }
+    }
+
+    if (optimalColumns === null) {
+      optimalColumns = minColumns;
+    }
+
+    const firstRowCount = Math.min(optimalColumns, totalItems);
+    const secondRowCount = totalItems - firstRowCount;
+
+    for (let index = 0; index < firstRowCount; index++) {
+      const element = $items.get(index);
+
+      if (!element) {
+        continue;
+      }
+
       element.style.gridRow = "1";
       element.style.gridColumn = String(index + 1);
-    });
+    }
 
-    secondRow.forEach(function(element, index) {
-      element.style.gridRow = "2";
+    for (let index = 0; index < secondRowCount; index++) {
+      const element = $items.get(firstRowCount + index);
 
-      var columnIndex;
-
-      if (index < firstRow.length) {
-        columnIndex = index + 1;
-      } else {
-        var overflowIndex = index - firstRow.length;
-        columnIndex = firstRow.length + overflowIndex + 1;
+      if (!element) {
+        continue;
       }
 
-      element.style.gridColumn = String(columnIndex);
-    });
+      element.style.gridRow = "2";
+      element.style.gridColumn = String(index + 1);
+    }
   }
 
   function closeLayoutMenu() {
