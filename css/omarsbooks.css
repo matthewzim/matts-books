@@ -13,8 +13,33 @@
   src: url("../font/AKZTEST.ttf") format("truetype");
 }
 
+:root {
+  --frame-size: clamp(28px, 4vw, 60px);
+  --frame-color: #d6b483;
+  --frame-shadow: #a07035;
+  --frame-highlight: #f1d9b2;
+  --background-color: #3b2312;
+  --background-highlight: #5a341a;
+}
+
+html {
+  background: radial-gradient(circle at 20% 20%, var(--frame-highlight), transparent 55%),
+    radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.15), transparent 50%),
+    linear-gradient(135deg, var(--frame-color), var(--frame-shadow));
+}
+
 body {
-  background-color: black;
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 15% 30%, rgba(140, 86, 38, 0.35), transparent 65%),
+    radial-gradient(circle at 85% 20%, rgba(213, 146, 79, 0.25), transparent 60%),
+    linear-gradient(160deg, var(--background-highlight), var(--background-color) 55%);
+  padding: var(--frame-size);
+  box-sizing: border-box;
+  border-radius: clamp(16px, 3vw, 36px);
+  box-shadow: 0 0 0 clamp(12px, 2.5vw, 32px) rgba(0, 0, 0, 0.25),
+    inset 0 0 35px rgba(0, 0, 0, 0.3);
+  color: #f7e9d6;
 }
 
 #Orientalism {
@@ -25,15 +50,18 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  color: white;
+  color: inherit;
   font-family: sans-serif;
-  height: 100vh;
+  min-height: max(0px, calc(100vh - (2 * var(--frame-size))));
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 #description {
   display: none;
   height: 80vh;
-  width: 100vw;
+  width: 100%;
   text-align: center;
   justify-content: space-around;
   align-items: center;
@@ -42,7 +70,7 @@ body {
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: inherit;
 
 }
 
@@ -89,45 +117,52 @@ body {
 }
 
 #layout-controls select {
-  background: transparent;
-  border: 1px solid white;
-  color: white;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: inherit;
   padding: 4px 8px;
   font-family: inherit;
   font-size: 14px;
   text-transform: none;
+  border-radius: 999px;
 }
 
 #layout-controls span {
   font-size: 12px;
+  letter-spacing: 0.12em;
 }
 
 #layout-controls select:focus {
-  outline: 2px solid white;
+  outline: 2px solid rgba(255, 255, 255, 0.7);
   outline-offset: 2px;
 }
 
 #books-view {
-  width: 90vw;
-  max-width: 1200px;
+  width: 100%;
+  max-width: none;
   max-height: 60vh;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 12px;
+  border: 1px solid rgba(255, 244, 231, 0.18);
+  padding: 24px;
   box-sizing: border-box;
   position: relative;
-  background-color: #050505;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(15, 15, 15, 0.9) 0px,
-    rgba(15, 15, 15, 0.9) 80px,
-    rgba(0, 0, 0, 0.95) 80px,
-    rgba(0, 0, 0, 0.95) 120px
-  );
-  background-size: 100% 160px;
+  background-image: linear-gradient(
+      rgba(36, 20, 9, 0.85),
+      rgba(19, 11, 5, 0.95)
+    ),
+    repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.04) 2px,
+      transparent 2px,
+      transparent 34px
+    );
+  background-blend-mode: soft-light;
   overflow: hidden;
+  border-radius: 24px;
+  box-shadow: inset 0 0 65px rgba(0, 0, 0, 0.5), 0 35px 55px rgba(0, 0, 0, 0.4);
 }
 
 #books-view.scroll-horizontal {
@@ -176,6 +211,7 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
 }
 
 .book-images {
@@ -211,7 +247,9 @@ body {
 
 #shelf-desktop {
   position: fixed;
-  width: 100vw;
+  left: var(--frame-size);
+  right: var(--frame-size);
+  bottom: var(--frame-size);
   font-size: 20px;
   border-top: 1px solid white;
   display: flex;
@@ -219,7 +257,7 @@ body {
   justify-content: space-around;
   height: 70px;
   font-weight: lighter;
-  background-color: black;
+  background-color: rgba(58, 36, 18, 0.9);
   opacity: 0.9;
   font-family: AKZTEST;
   /* position: fixed; */
@@ -233,8 +271,10 @@ body {
   height: 70px;
   font-weight: lighter;
   position: fixed;
-  width: 100vw;
-  background-color: red;
+  left: var(--frame-size);
+  right: var(--frame-size);
+  bottom: var(--frame-size);
+  background-color: rgba(58, 36, 18, 0.9);
 }
 
 #time {
