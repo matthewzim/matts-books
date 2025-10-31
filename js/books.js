@@ -9,8 +9,79 @@ $(document).ready(function() {
   const $scrollToggle = $("#scroll-toggle");
   const $interactionToggle = $("#interaction-toggle");
   const rootElement = document.documentElement;
+  let arrangementFrameId = null;
   let interactionMode = $interactionToggle.val();
   let draggedElement = null;
+
+  function scheduleBookArrangement() {
+    if (arrangementFrameId !== null) {
+      window.cancelAnimationFrame(arrangementFrameId);
+    }
+
+    arrangementFrameId = window.requestAnimationFrame(applyTwoRowOverflowLayout);
+  }
+
+  function clearBookPlacement($items) {
+    $items.each(function() {
+      this.style.gridRow = "";
+      this.style.gridColumn = "";
+    });
+  }
+
+  function applyTwoRowOverflowLayout() {
+    arrangementFrameId = null;
+
+    const rowMode = $rowToggle.val();
+    const scrollMode = $scrollToggle.val();
+    const $items = $books.children(".book-images");
+
+    if (!$items.length) {
+      return;
+    }
+
+    if (rowMode !== "two" || scrollMode !== "horizontal") {
+      clearBookPlacement($items);
+      return;
+    }
+
+    const availableWidth = $booksView.innerWidth();
+
+    if (!availableWidth) {
+      clearBookPlacement($items);
+      return;
+    }
+
+    clearBookPlacement($items);
+
+    const firstRow = [];
+    const secondRow = [];
+    let widthUsed = 0;
+
+    $items.each(function() {
+      const $item = $(this);
+      const itemWidth = Math.ceil($item.outerWidth(true));
+      const fitsInFirstRow =
+        secondRow.length === 0 &&
+        (widthUsed === 0 || widthUsed + itemWidth <= availableWidth);
+
+      if (fitsInFirstRow) {
+        firstRow.push(this);
+        widthUsed += itemWidth;
+      } else {
+        secondRow.push(this);
+      }
+    });
+
+    firstRow.forEach(function(element, index) {
+      element.style.gridRow = "1";
+      element.style.gridColumn = String(index + 1);
+    });
+
+    secondRow.forEach(function(element, index) {
+      element.style.gridRow = "2";
+      element.style.gridColumn = String(index + 1);
+    });
+  }
 
   function closeLayoutMenu() {
     if (!$bottomMenu.hasClass("is-open")) {
@@ -58,6 +129,8 @@ $(document).ready(function() {
       .removeClass("scroll-horizontal scroll-vertical view-one-row view-two-rows")
       .addClass(scrollMode === "horizontal" ? "scroll-horizontal" : "scroll-vertical")
       .addClass(rowMode === "one" ? "view-one-row" : "view-two-rows");
+
+    scheduleBookArrangement();
   }
 
   function applyTheme() {
@@ -123,6 +196,7 @@ $(document).ready(function() {
 
     applyLayout();
     applyInteractionMode();
+    scheduleBookArrangement();
   });
 
   initializeDragAndDrop();
@@ -171,6 +245,8 @@ $(document).ready(function() {
 
       img.style.height = heightString + 'px';
       img.style.width = widthString + 'px';
+
+      scheduleBookArrangement();
     }
   }
 
@@ -245,6 +321,8 @@ $(document).ready(function() {
       } else {
         $target.before($dragged);
       }
+
+      scheduleBookArrangement();
     });
 
     $books.on("dragover", function(event) {
@@ -269,6 +347,7 @@ $(document).ready(function() {
 
       if (event.target === this) {
         $(this).append(draggedElement);
+        scheduleBookArrangement();
       }
     });
   }
@@ -276,6 +355,9 @@ $(document).ready(function() {
   applyLayout();
   applyInteractionMode();
   applyTheme();
+  scheduleBookArrangement();
+
+  $(window).on("resize", scheduleBookArrangement);
 
   // Keep controls accessible for keyboard navigation when opened via focus.
   $menuToggle.on("focusout", function(event) {
