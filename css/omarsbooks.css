@@ -320,6 +320,12 @@ html[data-theme="dark"] body {
   box-shadow: var(--books-view-overflow-shadow);
 }
 
+#books-view.view-overflow.is-at-end {
+  border-right-width: 40px;
+  border-right-style: solid;
+  border-right-color: var(--books-view-border);
+}
+
 #books-view.scroll-horizontal {
   overflow-x: auto;
   overflow-y: hidden;
