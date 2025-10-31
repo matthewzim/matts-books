@@ -180,10 +180,24 @@ body {
 
 .book-images {
   margin-left: 0px;
+  cursor: grab;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .book-images:hover {
-  cursor: help;
+  cursor: grab;
+}
+
+.book-images.is-dragging {
+  cursor: grabbing;
+  opacity: 0.4 !important;
+  transform: scale(1.02);
+}
+
+.book-images.drop-target {
+  opacity: 1 !important;
+  outline: 2px dashed rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
 }
 
 #books:hover > .book-images {

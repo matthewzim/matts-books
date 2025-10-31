@@ -27,24 +27,26 @@ $(document).ready(function() {
 
     for (var i = 1; i < length + 1; i++) {
       $books.append(
-        '<img class = "book-images" id = ' + i + ' src = "jpg/' + i + '.jpg">'
+        '<img class = "book-images" draggable = "true" id = ' + i + ' src = "jpg/' + i + '.jpg">'
       );
       getSize(i);
     }
 
-    $("#reading-book").html(books[length-1].Title);
+    $("#reading-book").html(books[length - 1].Title);
 
-    $(".book-images").hover(function(){
-      $("#number").html("(#" + books[this.id-1].Number + ")");
-      $("#title").html(books[this.id-1].Title);
-      $("#author").html(books[this.id-1].Author);
+    $(".book-images").hover(function() {
+      $("#number").html("(#" + books[this.id - 1].Number + ")");
+      $("#title").html(books[this.id - 1].Title);
+      $("#author").html(books[this.id - 1].Author);
       // console.log(this.id);
       $("#description").css("display", "flex");
-      }, function(){
+    }, function() {
       $("#description").css("display", "none");
     });
     applyLayout();
   });
+
+  initializeDragAndDrop();
 
   function getSize(number) {
     var img = document.getElementById(number);
@@ -75,5 +77,74 @@ $(document).ready(function() {
       img.style.width = widthString + 'px';
     }
   }
+
+  function initializeDragAndDrop() {
+    var draggedElement = null;
+
+    $books.on("dragstart", ".book-images", function(event) {
+      draggedElement = this;
+      event.originalEvent.dataTransfer.effectAllowed = "move";
+      event.originalEvent.dataTransfer.setData("text/plain", this.id);
+      $(this).addClass("is-dragging");
+    });
+
+    $books.on("dragend", ".book-images", function() {
+      $(this).removeClass("is-dragging");
+      $books.find(".drop-target").removeClass("drop-target");
+      draggedElement = null;
+    });
+
+    $books.on("dragenter", ".book-images", function() {
+      if (this !== draggedElement) {
+        $(this).addClass("drop-target");
+      }
+    });
+
+    $books.on("dragover", ".book-images", function(event) {
+      event.preventDefault();
+      event.originalEvent.dataTransfer.dropEffect = "move";
+    });
+
+    $books.on("dragleave", ".book-images", function() {
+      $(this).removeClass("drop-target");
+    });
+
+    $books.on("drop", ".book-images", function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      $(this).removeClass("drop-target");
+
+      if (!draggedElement || draggedElement === this) {
+        return;
+      }
+
+      var $dragged = $(draggedElement);
+      var $target = $(this);
+
+      if ($dragged.index() < $target.index()) {
+        $target.after($dragged);
+      } else {
+        $target.before($dragged);
+      }
+    });
+
+    $books.on("dragover", function(event) {
+      event.preventDefault();
+      event.originalEvent.dataTransfer.dropEffect = "move";
+    });
+
+    $books.on("drop", function(event) {
+      event.preventDefault();
+
+      if (!draggedElement) {
+        return;
+      }
+
+      if (event.target === this) {
+        $(this).append(draggedElement);
+      }
+    });
+  }
+
   applyLayout();
 });
