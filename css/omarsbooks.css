@@ -303,7 +303,7 @@ html[data-theme="dark"] body {
   position: relative;
   background: var(--books-view-background);
   overflow: hidden;
-  border-radius: 24px;
+  border-radius: 0px;
   box-shadow: var(--books-view-shadow);
 }
 
