@@ -54,8 +54,8 @@
   --frame-size: clamp(28px, 4vw, 60px);
   --frame-color: #1f1f1f;
   --frame-shadow: #050505;
-  --frame-highlight: #2f2f2f;
-  --background-color: #0b0b0b;
+  --frame-highlight: #0b0b0b;
+  --background-color: #2f2f2f;
   --background-highlight: #1d1d1d;
   --divider-color: #2a2a2a;
   --text-color: #f7f3eb;
