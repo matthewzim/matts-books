@@ -29,8 +29,26 @@
         </div>
       </div>
       <div id="books-container">
-        <div id="books">
-          <!-- <img v-for="book in books" v-bind:id="book.Number" v-bind:src=" 'jpg/' + book.Number + '.jpg' " alt=""> -->
+        <div id="layout-controls">
+          <label for="row-toggle">
+            <span>Rows</span>
+            <select id="row-toggle">
+              <option value="two" selected>Two rows</option>
+              <option value="one">One row</option>
+            </select>
+          </label>
+          <label for="scroll-toggle">
+            <span>Scroll</span>
+            <select id="scroll-toggle">
+              <option value="horizontal" selected>Horizontal</option>
+              <option value="vertical">Vertical</option>
+            </select>
+          </label>
+        </div>
+        <div id="books-view">
+          <div id="books">
+            <!-- <img v-for="book in books" v-bind:id="book.Number" v-bind:src=" 'jpg/' + book.Number + '.jpg' " alt=""> -->
+          </div>
         </div>
       </div>
       <div id="shelf-desktop">

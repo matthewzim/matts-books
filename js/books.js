@@ -1,10 +1,32 @@
 $(document).ready(function() {
+  const $books = $("#books");
+  const $booksView = $("#books-view");
+  const $rowToggle = $("#row-toggle");
+  const $scrollToggle = $("#scroll-toggle");
+
+  function applyLayout() {
+    const rowMode = $rowToggle.val();
+    const scrollMode = $scrollToggle.val();
+
+    $books
+      .removeClass("layout-one-row layout-two-rows orientation-horizontal orientation-vertical")
+      .addClass(rowMode === "one" ? "layout-one-row" : "layout-two-rows")
+      .addClass(scrollMode === "horizontal" ? "orientation-horizontal" : "orientation-vertical");
+
+    $booksView
+      .removeClass("scroll-horizontal scroll-vertical")
+      .addClass(scrollMode === "horizontal" ? "scroll-horizontal" : "scroll-vertical");
+  }
+
+  $rowToggle.on("change", applyLayout);
+  $scrollToggle.on("change", applyLayout);
+
   $.getJSON("json/books.json", function(books) {
     var length = books.length;
     // console.log(length);
 
     for (var i = 1; i < length + 1; i++) {
-      $("#books").append(
+      $books.append(
         '<img class = "book-images" id = ' + i + ' src = "jpg/' + i + '.jpg">'
       );
       getSize(i);
@@ -21,6 +43,7 @@ $(document).ready(function() {
       }, function(){
       $("#description").css("display", "none");
     });
+    applyLayout();
   });
 
   function getSize(number) {
@@ -52,4 +75,5 @@ $(document).ready(function() {
       img.style.width = widthString + 'px';
     }
   }
+  applyLayout();
 });
