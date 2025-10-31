@@ -9,9 +9,67 @@ $(document).ready(function() {
   const $scrollToggle = $("#scroll-toggle");
   const $interactionToggle = $("#interaction-toggle");
   const rootElement = document.documentElement;
+  const BASE_SCALE = 1.25;
+  const MIN_VARIATION = 0.9;
+  const MAX_VARIATION = 1.1;
   let arrangementFrameId = null;
   let interactionMode = $interactionToggle.val();
   let draggedElement = null;
+
+  function getDivisor() {
+    const width = window.innerWidth || 0;
+
+    if (width >= 1500) {
+      return 3;
+    }
+
+    if (width >= 1200) {
+      return 5;
+    }
+
+    return 6;
+  }
+
+  function getBookVariation(bookNumber) {
+    const number = Number(bookNumber);
+
+    if (!Number.isFinite(number)) {
+      return 1;
+    }
+
+    const seededRandom = Math.sin(number * 12.9898) * 43758.5453;
+    const fraction = seededRandom - Math.floor(seededRandom);
+
+    return MIN_VARIATION + fraction * (MAX_VARIATION - MIN_VARIATION);
+  }
+
+  function updateBookDimensions(img) {
+    if (!img) {
+      return;
+    }
+
+    const naturalWidth = Number(img.dataset.naturalWidth || 0);
+    const naturalHeight = Number(img.dataset.naturalHeight || 0);
+
+    if (!naturalWidth || !naturalHeight) {
+      return;
+    }
+
+    const sizeVariation = Number(img.dataset.sizeVariation || 1);
+    const divisor = getDivisor();
+    const scale = BASE_SCALE * sizeVariation;
+    const newWidth = (naturalWidth / divisor) * scale;
+    const newHeight = (naturalHeight / divisor) * scale;
+
+    img.style.width = newWidth + "px";
+    img.style.height = newHeight + "px";
+  }
+
+  function updateAllBookDimensions() {
+    $books.children(".book-images").each(function() {
+      updateBookDimensions(this);
+    });
+  }
 
   function scheduleBookArrangement() {
     if (arrangementFrameId !== null) {
@@ -123,6 +181,8 @@ $(document).ready(function() {
     let topRowWidth = 0;
     let maxTopHeight = 0;
 
+    const topRowEntries = [];
+
     for (let index = 0; index < firstRowCount; index++) {
       const element = $items.get(index);
 
@@ -143,11 +203,15 @@ $(document).ready(function() {
       if (elementHeight > maxTopHeight) {
         maxTopHeight = elementHeight;
       }
+
+      topRowEntries.push({ element, height: elementHeight });
     }
 
     let bottomLeft = 0;
     let bottomRowWidth = 0;
     let maxBottomHeight = 0;
+
+    const bottomRowEntries = [];
 
     for (let index = 0; index < secondRowCount; index++) {
       const element = $items.get(firstRowCount + index);
@@ -173,7 +237,20 @@ $(document).ready(function() {
       if (elementHeight > maxBottomHeight) {
         maxBottomHeight = elementHeight;
       }
+
+      bottomRowEntries.push({ element, height: elementHeight });
     }
+
+    topRowEntries.forEach(function(entry) {
+      const offset = maxTopHeight - entry.height;
+      entry.element.style.top = offset > 0 ? offset + "px" : "0px";
+    });
+
+    bottomRowEntries.forEach(function(entry) {
+      const baseline = maxTopHeight + rowGap;
+      const offset = baseline + (maxBottomHeight - entry.height);
+      entry.element.style.top = offset > 0 ? offset + "px" : baseline + "px";
+    });
 
     const contentWidth = Math.max(topRowWidth, bottomRowWidth);
     let contentHeight = maxTopHeight;
@@ -331,31 +408,24 @@ $(document).ready(function() {
     var img = document.getElementById(number);
 
     img.onload = function() {
-      var width = img.naturalWidth;
-      var height = img.naturalHeight;
-      var w = window.innerWidth;
-      var divisor;
+      const variation = getBookVariation(number);
 
-      if (w >= 1500) {
-        divisor = 3;
-      } else if (w >= 1200) {
-        divisor = 5;
-      } else {
-        divisor = 6;
-      }
+      img.dataset.naturalWidth = img.naturalWidth;
+      img.dataset.naturalHeight = img.naturalHeight;
+      img.dataset.sizeVariation = variation;
 
-      var scaleFactor = 1.25;
-      var newWidth = (width / divisor) * scaleFactor;
-      var newHeight = (height / divisor) * scaleFactor;
-
-      widthString = newWidth.toString();
-      heightString = newHeight.toString();
-
-      img.style.height = heightString + 'px';
-      img.style.width = widthString + 'px';
-
+      updateBookDimensions(img);
       scheduleBookArrangement();
+    };
+
+    if (img.complete && img.naturalWidth && img.naturalHeight) {
+      img.onload();
     }
+  }
+
+  function handleWindowResize() {
+    updateAllBookDimensions();
+    scheduleBookArrangement();
   }
 
   function initializeDragAndDrop() {
@@ -465,7 +535,7 @@ $(document).ready(function() {
   applyTheme();
   scheduleBookArrangement();
 
-  $(window).on("resize", scheduleBookArrangement);
+  $(window).on("resize", handleWindowResize);
 
   // Keep controls accessible for keyboard navigation when opened via focus.
   $menuToggle.on("focusout", function(event) {
