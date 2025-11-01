@@ -399,8 +399,8 @@ html[data-theme="dark"] body {
 
 #shelf-desktop {
   position: fixed;
-  left: var(--frame-size);
-  right: var(--frame-size);
+  left: 0;
+  right: 0;
   bottom: 0;
   font-size: 20px;
   border-top: 1px solid var(--shelf-border);
@@ -423,8 +423,8 @@ html[data-theme="dark"] body {
   height: 70px;
   font-weight: lighter;
   position: fixed;
-  left: var(--frame-size);
-  right: var(--frame-size);
+  left: 0;
+  right: 0;
   bottom: 0;
   background-color: var(--shelf-background);
 }
