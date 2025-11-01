@@ -1,106 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
   <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATT'S BOOKS</title>
-    <link rel="icon" href="ico/ico002.png" size="48 x 48">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/omarsbooks.css">
-    <link rel="stylesheet" href="css/omarsbooksMobile.css">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/ico/ico002.png" />
+    <title>Matt's Books</title>
   </head>
   <body>
-    <div id="container">
-      <div id="description">
-        <div id="number">
-        </div>
-        <div id="title">
-          {{books[value - 1].Title}}
-        </div>
-        <div id="by">
-          by
-        </div>
-        <div id="author">
-          {{books[value - 1].Author}}
-        </div>
-      </div>
-      <div id="books-container">
-        <div id="books-view">
-          <div id="books">
-            <!-- <img v-for="book in books" v-bind:id="book.Number" v-bind:src=" 'jpg/' + book.Number + '.jpg' " alt=""> -->
-          </div>
-        </div>
-      </div>
-      <div id="shelf-desktop">
-        <div>
-          MATT'S BOOKS
-        </div>
-        <div id="bottom-menu">
-          <button id="layout-menu-toggle" type="button" aria-expanded="false" aria-controls="layout-controls">
-            Display options
-          </button>
-          <div id="layout-controls" aria-hidden="true">
-            <label for="theme-toggle">
-              <span>Theme</span>
-              <select id="theme-toggle">
-                <option value="light" selected>White</option>
-                <option value="dark">Black</option>
-              </select>
-            </label>
-            <label for="row-toggle">
-              <span>Rows</span>
-              <select id="row-toggle">
-                <option value="overflow" selected>Overflow</option>
-                <option value="wrap">Wrap</option>
-              </select>
-            </label>
-            <label for="interaction-toggle">
-              <span>Interaction</span>
-              <select id="interaction-toggle">
-                <option value="drag" selected>Drag &amp; drop</option>
-                <option value="info">View info</option>
-              </select>
-            </label>
-          </div>
-        </div>
-        <div id = "time">
-
-        </div>
-        <div>
-          <div id="currently-reading" ref = "test">
-            CURRENTLY READING
-          </div>
-          <div id="reading-book">
-            {{books[books.length-1].Title}}
-          </div>
-        </div>
-      </div>
-      <div id="shelf-mobile">
-        <div>
-          MATT'S BOOKS
-        </div>
-      </div>
-    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
-
-  <!-- GET TIME FUNCTION -->
-  <script type="text/javascript">
-    getTheTime();
-    function getTheTime() {
-      var d = new Date();
-      var n = d.toLocaleTimeString();
-      document.getElementById("time").innerHTML = n;
-    }
-    setInterval(getTheTime, 1000);
-  </script>
-  <!-- END GET TIME FUNCTION -->
-
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-  <!-- <script src="js/books-images.js" charset="utf-8"></script> -->
-  <script src="js/books.js" charset="utf-8"></script>
-  <!-- <script src="js/books-vue.js" charset="utf-8"></script> -->
-
 </html>

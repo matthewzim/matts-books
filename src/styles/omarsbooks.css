@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'BodoniIt';
-  src: url("../font/bodonit.ttf") format("truetype");
+  src: url("/font/bodonit.ttf") format("truetype");
 }
 
 @font-face {
   font-family: 'AKZROM';
-  src: url("../font/AKZROM.ttf") format("truetype");
+  src: url("/font/AKZROM.ttf") format("truetype");
 }
 
 @font-face {
   font-family: 'AKZTEST';
-  src: url("../font/AKZTEST.ttf") format("truetype");
+  src: url("/font/AKZTEST.ttf") format("truetype");
 }
 
 :root {
