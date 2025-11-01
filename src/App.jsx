@@ -541,8 +541,10 @@ export default function App() {
           return previous;
         }
 
-        const [moved] = updated.splice(fromIndex, 1);
-        updated.splice(toIndex, 0, moved);
+        const temp = updated[fromIndex];
+        updated[fromIndex] = updated[toIndex];
+        updated[toIndex] = temp;
+
         return updated;
       });
 
